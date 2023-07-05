@@ -151,16 +151,19 @@ jobs:
             # mysqladmin -u root password ${{ secrets.MARIADB_PASSWORD }}
             seaf-server -c ~/dev/conf -d ~/dev/seafile-data -D all -f -l - &
 
+        # - name: checkout
+        #   uses: actions/checkout@v3
+        
+        # - name: npm 
+        #   run: |
+        #     cd frontend
+        #     npm install caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev
+        #     npm run build
+        #     npm run dev
+        
         - name: checkout
           uses: actions/checkout@v3
-        
-        - name: npm 
-          run: |
-            cd frontend
-            npm install caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev
-            npm run build
-            npm run dev
-        
+
         - name: python
           if: ${{ always() }}
           run: |
