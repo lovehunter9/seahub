@@ -163,10 +163,10 @@ jobs:
             npm run dev
         
         - name: checkout
+          if: ${{ always() }}
           uses: actions/checkout@v3
 
         - name: python
-          if: ${{ always() }}
           run: |
             pip install virtualenv
             virtualenv .virtualenv
