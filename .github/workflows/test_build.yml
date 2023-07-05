@@ -162,6 +162,7 @@ jobs:
             npm run dev
         
         - name: python
+          if: ${{ always() }}
           run: |
             cd ..
             pip install virtualenv
