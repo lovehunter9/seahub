@@ -167,7 +167,6 @@ jobs:
         - name: python
           if: ${{ always() }}
           run: |
-            cd ..
             pip install virtualenv
             virtualenv .virtualenv
             . .virtualenv/bin/activate
