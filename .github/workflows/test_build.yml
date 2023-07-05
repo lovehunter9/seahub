@@ -1,4 +1,4 @@
-name: Seafile Server Build CI
+name: Seahub Build CI
 
 on: 
   push:
@@ -167,6 +167,7 @@ jobs:
           uses: actions/checkout@v3
 
         - name: python
+          if: ${{ always() }}
           run: |
             pip install virtualenv
             virtualenv .virtualenv
