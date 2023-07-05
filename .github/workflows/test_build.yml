@@ -14,7 +14,6 @@ env:
     CCNET_CONF_DIR: ~/dev/conf
     SEAFILE_CONF_DIR: ~/dev/seafile-data
     SEAFILE_CENTRAL_CONF_DIR: ~/dev/conf
-    NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
   test_build:
