@@ -4,12 +4,16 @@ on:
   push:
   workflow_dispatch:
 
-# env:
+env:
 #   # registry: my_registry_name
 #   # Not sure these are actually being passed down to rails, set them as the default in database.yml
 #   DB_HOST: 127.0.0.1
 #   DB_USERNAME: root
 #   DB_PASSWORD: ${{ secrets.MARIADB_ROOT_PASSWORD }}
+    PYTHONPATH: /usr/local/lib/python3.11/site-packages/:~/seahub/thirdpart
+    CCNET_CONF_DIR: ~/dev/conf
+    SEAFILE_CONF_DIR: ~/dev/seafile-data
+    SEAFILE_CENTRAL_CONF_DIR: ~/dev/conf
 
 jobs:
   test_build:
@@ -71,11 +75,9 @@ jobs:
             sudo make install
             sudo ldconfig
 
-        - name: checkout
-          uses: actions/checkout@v3
-
         - name: compile seafile-server
           run: |
+            cd ~/dev/source-code/seafile-server
             ./autogen.sh
             ./configure --disable-fuse
             make
@@ -114,6 +116,17 @@ jobs:
                 }
             }
             FILE_SERVER_ROOT = 'http://127.0.0.1:8082'
+
+            import os
+            PROJECT_ROOT = $GITHUB_WORKSPACE # '~/dev/source-code/seahub'
+            WEBPACK_LOADER = {
+                'DEFAULT': {
+                    'BUNDLE_DIR_NAME': 'frontend/',
+                    'STATS_FILE': os.path.join(PROJECT_ROOT,
+                                              'frontend/webpack-stats.dev.json'),
+                }
+            }
+            DEBUG = True
             EOF
 
 
@@ -138,24 +151,45 @@ jobs:
             # mysqladmin -u root password ${{ secrets.MARIADB_PASSWORD }}
             seaf-server -c ~/dev/conf -d ~/dev/seafile-data -D all -f -l - &
 
-        - name: Archive code coverage results
-          uses: actions/upload-artifact@v3
-          with:
-            name: sea-server
-            path: server/seaf-server
+        - name: checkout
+          uses: actions/checkout@v3
         
-        - name: Download a single artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: sea-server
-            path: ~/dev/sea-server
-
-        - name: try to run downloaded artifact
+        - name: npm 
           run: |
-            cd ~/dev/sea-server
-            ls -af
-            chmod +x seaf-server
-            ./seaf-server -c ~/dev/conf -d ~/dev/seafile-data -D all -f -l - &
+            cd frontend
+            npm install caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev
+            npm run build
+            npm run dev
+        
+        - name: python
+          run: |
+            cd ..
+            pip install virtualenv
+            virtualenv .virtualenv
+            . .virtualenv/bin/activate
+            pip install -r requirement.txt
+            # python manage.py migrate
+            python manage.py runserver 0.0.0.0:8000
+        
+
+        # - name: Archive code coverage results
+        #   uses: actions/upload-artifact@v3
+        #   with:
+        #     name: sea-server
+        #     path: server/seaf-server
+        
+        # - name: Download a single artifact
+        #   uses: actions/download-artifact@v3
+        #   with:
+        #     name: sea-server
+        #     path: ~/dev/sea-server
+
+        # - name: try to run downloaded artifact
+        #   run: |
+        #     cd ~/dev/sea-server
+        #     ls -af
+        #     chmod +x seaf-server
+        #     ./seaf-server -c ~/dev/conf -d ~/dev/seafile-data -D all -f -l - &
   
         # - name: install dependencies and test
         #   run: |
