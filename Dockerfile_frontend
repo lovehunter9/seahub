@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 MAINTAINER wangrongxiang
 
+ENV NODE_OPTIONS "--openssl-legacy-provider"
 RUN apt-get update && \
     apt-get upgrade && \
     apt-get install -y curl sudo && \
