@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 MAINTAINER wangrongxiang
 
-RUN apt-get update && \
-    apt-get upgrade && \
+RUN apt-get -y update && \
+    apt-get -y upgrade && \
     apt-get install -y curl sudo && \
     sudo apt-get install -y ssh libevent-dev libcurl4-openssl-dev libglib2.0-dev uuid-dev intltool && \
     sudo apt-get install -y libsqlite3-dev libmysqlclient-dev libarchive-dev libtool libjansson-dev valac libfuse-dev && \
@@ -12,17 +12,17 @@ RUN apt-get update && \
     sudo apt-get install -y libpcre3-dev zlib1g-dev xz-utils nginx pkg-config poppler-utils libmemcached-dev libjwt-dev && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     sudo apt-get install -y nodejs && \
-    sudo apt-get install -y python3-pip python3.8 python3.8-dev && \
-    sudo python3 -m pip install --upgrade pip && \
-    rm /usr/bin/python && \
-    rm /usr/bin/python3 && \
-    ln -s /usr/bin/python3.8 /usr/bin/python && \
-    ln -s /usr/bin/python3.8 /usr/bin/python3 && \
-    rm /usr/bin/pip && \
-    rm /usr/bin/pip3 && \
-    ln -s /usr/local/bin/pip3.8 /usr/bin/pip && \
-    ln -s /usr/local/bin/pip3.6 /usr/bin/pip3 && \
     pip install python-cas djangosaml2 cffi sqlalchemy pymysql pillow pycryptodome configparser pylibmc django-pylibmc elasticsearch==5.5.0 elasticsearch-dsl==5.4.0 Django==2.2.14 future captcha django-statici18n django-post_office==3.3.0 django-webpack_loader==0.7.0 gunicorn mysqlclient django-picklefield==2.1.1 openpyxl qrcode django-formtools django-simple-captcha djangorestframework==3.11.1 python-dateutil requests pillow pyjwt pycryptodome requests_oauthlib mock nose exam splinter pytest pytest-django
+    # sudo apt-get install -y python3-pip python3.8 python3.8-dev && \
+    # sudo python3 -m pip install --upgrade pip && \
+    # rm /usr/bin/python && \
+    # rm /usr/bin/python3 && \
+    # ln -s /usr/bin/python3.8 /usr/bin/python && \
+    # ln -s /usr/bin/python3.8 /usr/bin/python3 && \
+    # rm /usr/bin/pip && \
+    # rm /usr/bin/pip3 && \
+    # ln -s /usr/local/bin/pip3.8 /usr/bin/pip && \
+    # ln -s /usr/local/bin/pip3.6 /usr/bin/pip3 && \
 
 WORKDIR /root/dev/source-code
 COPY . /root/dev/source-code/seahub
@@ -49,9 +49,7 @@ WORKDIR /root/dev/source-code/seahub
 COPY . ./
 COPY ./config_files /root/dev
 
-RUN apt-get -y update && \
-    apt-get -y upgrade && \
-    apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
+RUN apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
     pip install --upgrade pip && pip install -r requirements.txt
 
 EXPOSE 8082
