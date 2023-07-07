@@ -13,7 +13,7 @@ RUN apt-get -y update && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     sudo apt-get install -y nodejs && \
     sudo apt-get install -y python3-pip && \
-    sudo python3 -m pip install -upgrade pip && \
+    sudo python3 -m pip install --upgrade pip && \
     rm /usr/bin/python && \
     rm /usr/bin/python3 && \
     ln -s /usr/bin/python3.10 /usr/bin/python && \
