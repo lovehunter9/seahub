@@ -12,7 +12,7 @@ RUN apt-get -y update && \
     sudo apt-get install -y libpcre3-dev zlib1g-dev xz-utils nginx pkg-config poppler-utils libmemcached-dev libjwt-dev && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     sudo apt-get install -y nodejs && \
-    sudo apt-get install -y python3-pip && \
+    sudo apt-get install -y python3-pip python3 python3-dev && \
     sudo python3 -m pip install --upgrade pip && \
     pip install python-cas djangosaml2 cffi sqlalchemy pymysql pillow pycryptodome configparser pylibmc django-pylibmc elasticsearch==5.5.0 elasticsearch-dsl==5.4.0 Django==2.2.14 future captcha django-statici18n django-post_office==3.3.0 django-webpack_loader==0.7.0 gunicorn mysqlclient django-picklefield==2.1.1 openpyxl qrcode django-formtools django-simple-captcha djangorestframework==3.11.1 python-dateutil requests pillow pyjwt pycryptodome requests_oauthlib mock nose exam splinter pytest pytest-django
     # rm /usr/bin/python && \
@@ -55,4 +55,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8082
 
-ENTRYPOINT ["python", "manage.py", "runserver", "server:8000"]
+ENTRYPOINT ["python3", "manage.py", "runserver", "server:8000"]
