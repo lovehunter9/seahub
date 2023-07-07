@@ -2,13 +2,13 @@ FROM python:3.8
 MAINTAINER wangrongxiang
 
 ENV PYTHONPATH /usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart:$PYTHONPATH
-ENV CCNET_CONF_DIR ~/dev/conf
-ENV SEAFILE_CONF_DIR ~/dev/seafile-data
-ENV SEAFILE_CENTRAL_CONF_DIR ~/dev/conf
+ENV CCNET_CONF_DIR /root/dev/conf
+ENV SEAFILE_CONF_DIR /root/dev/seafile-data
+ENV SEAFILE_CENTRAL_CONF_DIR /root/dev/conf
 
-WORKDIR ~/dev/source-code/seahub
+WORKDIR /root/dev/source-code/seahub
 COPY . ./
-COPY ./config_files ~/dev
+COPY ./config_files /root/dev
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
