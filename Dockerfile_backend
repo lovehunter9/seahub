@@ -17,4 +17,4 @@ RUN apt-get -y update && \
 
 EXPOSE 8082
 
-ENTRYPOINT ["python", "manage.py"]
+ENTRYPOINT ["python", "manage.py", "runserver", "server:8000"]
