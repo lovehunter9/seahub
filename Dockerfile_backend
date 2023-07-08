@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 MAINTAINER wangrongxiang
 
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Shanghai
+# ARG DEBIAN_FRONTEND=noninteractive
+# ENV TZ=Asia/Shanghai
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
@@ -13,7 +13,7 @@ RUN apt-get -y update && \
     sudo apt-get install -y wget gcc autoconf automake mysql-client librados-dev libxml2-dev curl telnet && \
     sudo apt-get install -y netcat unzip netbase ca-certificates apt-transport-https build-essential libxslt1-dev libffi-dev && \
     sudo apt-get install -y libpcre3-dev zlib1g-dev xz-utils nginx pkg-config poppler-utils libmemcached-dev libjwt-dev && \
-    sudo apt-get install -y tzdata && \
+    DEBIAN_FRONTEND=noninteractive apt install -y tzdata && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     sudo apt-get install -y nodejs && \
     sudo apt-get install -y python3-pip python3 python3-dev && \
