@@ -12,8 +12,6 @@ name: Publish Seahub Frontend Docker image
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
   release:
     types: [published]
 
