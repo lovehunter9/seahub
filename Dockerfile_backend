@@ -24,9 +24,9 @@ RUN apt-get -y update && \
     # ln -s /usr/local/bin/pip3.10 /usr/bin/pip && \
     # ln -s /usr/local/bin/pip3.10 /usr/bin/pip3 && \
 
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Shanghai
-RUN apt-get install -y tzdata
+# ARG DEBIAN_FRONTEND=noninteractive
+# ENV TZ=Asia/Shanghai
+# RUN apt-get install -y tzdata
 
 # WORKDIR /root/dev/source-code
 # COPY . /root/dev/source-code/seahub
