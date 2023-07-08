@@ -52,8 +52,8 @@ COPY ./config_files /root/dev
 RUN apt-get -y update && \
     apt-get -y upgrade && \
     apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
-    pip install --upgrade pip && pip install -r requirements.txt && pip install tzdata collections
-# RUN pip install -r requirements.txt && pip install tzdata collections
+    pip install --upgrade pip && pip install -r requirements.txt && pip install tzdata
+# RUN pip install -r requirements.txt && pip install tzdata
 
 EXPOSE 8082
 
