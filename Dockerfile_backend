@@ -1,6 +1,9 @@
 FROM ubuntu:20.04
 MAINTAINER wangrongxiang
 
+ENV TZ=Asia/Shanghai \
+    DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get -y update && \
     apt-get -y upgrade && \
     apt-get install -y curl sudo && \
@@ -62,6 +65,5 @@ RUN apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev sla
 # RUN pip install -r requirements.txt && pip install tzdata
 
 EXPOSE 8082
-
 
 ENTRYPOINT ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
