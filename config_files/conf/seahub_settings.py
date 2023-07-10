@@ -4,7 +4,7 @@ DATABASES = {
         'NAME': 'seahub',
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': 'database',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
