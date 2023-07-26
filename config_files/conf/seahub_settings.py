@@ -20,3 +20,5 @@ WEBPACK_LOADER = {
     }
 }
 DEBUG = True
+
+CSRF_TRUSTED_ORIGINS = ['seafile.liuy102.snowinning.com']
