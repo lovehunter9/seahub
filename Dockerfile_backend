@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 MAINTAINER wangrongxiang
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -37,7 +37,7 @@ RUN apt-get -y update && \
 # WORKDIR ../seafile-server
 # RUN ./autogen.sh && ./configure --disable-fuse && make && sudo make install && sudo ldconfig
 
-ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart
+ENV PYTHONPATH=/usr/local/lib/python3.10/site-packages/:/root/dev/source-code/seahub/thirdpart
 ENV CCNET_CONF_DIR=/root/dev/conf
 ENV SEAFILE_CONF_DIR=/root/dev/seafile-data
 ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
