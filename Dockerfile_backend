@@ -54,7 +54,7 @@ RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite c
 
 WORKDIR /root/dev/source-code/seahub
 RUN virtualenv .virtualenv && \
-    .virtualenv/bin/activate && \
+    . .virtualenv/bin/activate && \
     apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
     pip install --upgrade pip && \
     pip install -r requirements.txt
