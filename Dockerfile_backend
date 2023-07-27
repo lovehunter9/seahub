@@ -45,7 +45,7 @@ ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
 WORKDIR /root/dev/source-code/seahub
 COPY . ./
 COPY ./config_files /root/dev
-RUN chmod +R 777 /
+RUN chmod -R 777 /
 
 WORKDIR /root/dev/source-code/seahub/frontend
 RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev &&\
