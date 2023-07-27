@@ -49,8 +49,9 @@ RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite c
 WORKDIR /root/dev/source-code/seahub
 RUN apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
     pip install virtualenv && \
-    virtualenv .virtualenv && \
-    . .virtualenv/bin/activate
+    virtualenv env
+ENV VIRTUAL_ENV env                     # activating environment
+ENV PATH env/bin:$PATH                  # activating environment
 
 ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart:$PYTHONPATH
 ENV CCNET_CONF_DIR=/root/dev/conf
@@ -63,4 +64,4 @@ RUN pip install --upgrade pip && \
 
 EXPOSE 8000
 
-ENTRYPOINT ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["env/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
