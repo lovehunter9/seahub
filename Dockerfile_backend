@@ -21,21 +21,21 @@ RUN apt-get -y update && \
     sudo python3 -m pip install --upgrade pip && \
     pip install python-cas djangosaml2 cffi sqlalchemy pymysql pillow pycryptodome configparser pylibmc django-pylibmc elasticsearch==5.5.0 elasticsearch-dsl==5.4.0 Django==2.2.14 future captcha django-statici18n django-post_office==3.3.0 django-webpack_loader==0.7.0 gunicorn mysqlclient django-picklefield==2.1.1 openpyxl qrcode django-formtools django-simple-captcha djangorestframework==3.11.1 python-dateutil requests pillow pyjwt pycryptodome requests_oauthlib mock nose exam splinter pytest pytest-django
 
-# WORKDIR /root/dev/source-code
-# COPY . /root/dev/source-code/seahub
-# COPY ./config_files /root/dev
-# RUN git clone https://github.com/haiwen/libevhtp.git /root/dev/source-code/libevhtp && \
-#     git clone https://github.com/haiwen/libsearpc.git /root/dev/source-code/libsearpc && \
-#     git clone https://github.com/lovehunter9/seafile-server.git /root/dev/source-code/seafile-server
+WORKDIR /root/dev/source-code
+COPY . /root/dev/source-code/seahub
+COPY ./config_files /root/dev
+RUN git clone https://github.com/haiwen/libevhtp.git /root/dev/source-code/libevhtp && \
+ git clone https://github.com/haiwen/libsearpc.git /root/dev/source-code/libsearpc && \
+ git clone https://github.com/lovehunter9/seafile-server.git /root/dev/source-code/seafile-server
 
-# WORKDIR libevhtp
-# RUN cmake -DEVHTP_DISABLE_SSL=ON -DEVHTP_BUILD_SHARED=OFF . && make && sudo make install && sudo ldconfig
+WORKDIR libevhtp
+RUN cmake -DEVHTP_DISABLE_SSL=ON -DEVHTP_BUILD_SHARED=OFF . && make && sudo make install && sudo ldconfig
 
-# WORKDIR ../libsearpc
-# RUN ./autogen.sh && ./configure && make && sudo make install && sudo ldconfig
+WORKDIR ../libsearpc
+RUN ./autogen.sh && ./configure && make && sudo make install && sudo ldconfig
 
-# WORKDIR ../seafile-server
-# RUN ./autogen.sh && ./configure --disable-fuse && make && sudo make install && sudo ldconfig
+WORKDIR ../seafile-server
+RUN ./autogen.sh && ./configure --disable-fuse && make && sudo make install && sudo ldconfig
 
 ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart
 ENV CCNET_CONF_DIR=/root/dev/conf
