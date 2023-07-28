@@ -44,8 +44,7 @@ RUN chmod -R 777 /root/dev
 
 WORKDIR /root/dev/source-code/seahub/frontend
 RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev &&\
-    npm run build && \
-    npm run dev &
+    npm run build
 
 WORKDIR /root/dev/source-code/seahub
 RUN apt-get install -y build-essential python3-dev libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
@@ -65,6 +64,7 @@ RUN pip install --upgrade pip && \
 
 EXPOSE 8082
 EXPOSE 8000
+EXPOSE 3000
 
 #ENTRYPOINT ["env/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
 RUN chmod +x ./docker.sh
