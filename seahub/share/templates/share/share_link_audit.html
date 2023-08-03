@@ -4,7 +4,7 @@
 {% block main_panel %}
 <div class="new-narrow-panel" role="main">
     <h2 class="hd">{% trans "Email Verification" %}</h2>
-    <form action="" method="post" id="link-audit-form" class="con">{% csrf_token %}
+    <form action="" method="post" id="link-audit-form" class="con">
         <p class="tip">{% trans "Please provide your email address to continue." %}</p>
         <label for="email">{% trans "Email" %}</label>
         <input id="email" type="text" class="input email-input" name="email" value="{{email}}" />

@@ -10,7 +10,7 @@
     {% if no_quota %}
     <p class="error">{% trans "The owner of this library has run out of space." %}</p>
     {% else %}
-    <form id="upload-file-form" enctype="multipart/form-data" method="post" action="">{% csrf_token %}
+    <form id="upload-file-form" enctype="multipart/form-data" method="post" action="">
         <div class="fileupload-buttonbar">
             <div>
                 <span class="fileinput-button vam" id="add-file">

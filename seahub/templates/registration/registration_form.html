@@ -13,7 +13,7 @@
         {% if request.user.is_authenticated %}
         <p>{% trans "Welcome back, you are already signed in." %}</p>
         {% else %}
-        <form action="" method="post" id="signup-form">{% csrf_token %}
+        <form action="" method="post" id="signup-form">
             {% if form.name.field.required %}
             <label for="id_name">{% trans "Name" %}</label>
             {{ form.name }} {{ form.name.errors }}

@@ -15,7 +15,7 @@
             {% for boundfield in delete_avatar_form %}
             {{ boundfield }}
             {% endfor %}
-            <p>{% csrf_token %}<input type="submit" value="{% trans "Delete These" %}" /></p>
+            <p><input type="submit" value="{% trans "Delete These" %}" /></p>
         </form>
     {% endif %}
 {% endblock %}

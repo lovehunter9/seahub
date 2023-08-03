@@ -6,7 +6,7 @@
 {% block main_content %}
 <div class="new-narrow-panel">
     <h2 class="hd">{% trans "Set your password" %}</h2>
-    <form action="" method="post" class="con">{% csrf_token %}
+    <form action="" method="post" class="con">
         <label>{% trans "Email" %} </label><br />
         <input type="text" disabled="disabled" value="{{ iv.accepter }}" class="input input-disabled" /><br />
 

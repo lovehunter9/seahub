@@ -5,7 +5,7 @@
 {% block main_panel %}
 <div class="wide-panel">
     <h3>{% trans "Please choose how to view encrypted libraries online:" %}</h3>
-    <form method="post" action="{% url 'options_save' %}">{% csrf_token %}
+    <form method="post" action="{% url 'options_save' %}">
         <input type="radio" name="repo-enc" value="server-crypto" class="vam" />
         <span class="vam bold">{% trans "Send passwords to the server." %}</span> <span class="vam">{% trans "Files will be decrypted in the server before being sent to you." %}</span><br />
         <input type="radio" name="repo-enc" value="client-crypto" class="vam" />

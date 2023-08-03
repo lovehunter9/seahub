@@ -39,7 +39,7 @@
 </div>
 {% endif %}
 
-<form action="" method="post" id="contact-add-form" class="hide">{% csrf_token %}
+<form action="" method="post" id="contact-add-form" class="hide">
     <h3>{% trans "Add Contacts"%}</h3>
     <label>{% trans "Email"%}</label><br />
     <input maxlength="255" name="contact_email" type="text" class="input" /><br />
@@ -48,7 +48,7 @@
     <p class="error hide"></p>
     <input type="submit" value="{% trans "Submit"%}"  class="submit" />
 </form>
-<form action="" method="post" id="contact-edit-form" class="hide">{% csrf_token %}
+<form action="" method="post" id="contact-edit-form" class="hide">
     <h3>{% trans "Edit Contact"%}</h3>
     <label>{% trans "Email"%}</label><br />
     <input maxlength="255" name="contact_email" readonly="readonly" type="text" class="input" /><br />

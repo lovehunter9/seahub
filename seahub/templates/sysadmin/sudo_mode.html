@@ -6,7 +6,7 @@
 {% block main_content %}
 <div class="new-narrow-panel">
 <h2 class="hd">{% trans "Confirm password to continue" %}</h2>
-<form action="" method="post" class="con">{% csrf_token %}
+<form action="" method="post" class="con">
 	<label for="password">{% trans "Password" %}</label>
 	<input type="password" name="password" value="" class="input" autocomplete="off" />
     {% if password_error %}

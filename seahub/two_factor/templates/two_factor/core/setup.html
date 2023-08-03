@@ -47,7 +47,7 @@
       account.</p>
   {% endif %}
 
-  <form action="" method="post">{% csrf_token %}
+  <form action="" method="post">
     {% include "two_factor/_wizard_forms.html" %}
     {% include "two_factor/_wizard_actions.html" %}
   </form>

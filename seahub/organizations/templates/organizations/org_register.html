@@ -9,7 +9,7 @@
         {% if request.user.is_authenticated %}
         <p>{% trans "Welcome back, you are already signed in." %}</p>
         {% else %}
-        <form action="" method="post" id="signup-form">{% csrf_token %}
+        <form action="" method="post" id="signup-form">
             <label for="org_name">{% trans "Organization Name" %}</label>
             <input id="org_name" type="text" name="org_name" value="{{ form.org_name.value|default_if_none:"" }}" class="input" />
             {{ form.org_name.errors }}
