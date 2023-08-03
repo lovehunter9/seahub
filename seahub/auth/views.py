@@ -88,7 +88,7 @@ def _handle_login_form_valid(request, user, redirect_to, remember_me):
     request.session['remember_me'] = remember_me
     return log_user_in(request, user, redirect_to)
 
-@csrf_protect
+# @csrf_protect
 @never_cache
 def login(request, template_name='registration/login.html',
           redirect_if_logged_in='libraries',
