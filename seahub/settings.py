@@ -705,6 +705,7 @@ LOGIN_ATTEMPT_LIMIT = 5
 LOGIN_ATTEMPT_TIMEOUT = 15 * 60 # in seconds (default: 15 minutes)
 FREEZE_USER_ON_LOGIN_FAILED = False # deactivate user account when login attempts exceed limit
 
+SESSION_COOKIE_NAME = "sfsessionid"
 # Age of cookie, in seconds (default: 1 day).
 SESSION_COOKIE_AGE = 24 * 60 * 60
 
