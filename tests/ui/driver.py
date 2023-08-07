@@ -89,5 +89,5 @@ class Browser(object):
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
 
     def get_file_content(self, url):
-        sessionid = self.d.get_cookie('sessionid')['value']
-        return requests.get(url, cookies={'sessionid': sessionid}).text
+        sessionid = self.d.get_cookie('sfsessionid')['value']
+        return requests.get(url, cookies={'sfsessionid': sessionid}).text
