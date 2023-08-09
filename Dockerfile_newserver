@@ -28,7 +28,9 @@ RUN apt-get -y update && \
 WORKDIR /root/dev/source-code
 COPY . /root/dev/source-code/seahub
 COPY ./config_files /root/dev
-RUN git clone https://github.com/haiwen/libevhtp.git /root/dev/source-code/libevhtp && \
+RUN git config --global http.sslverify false && \
+    git config --global https.sslverify false && \
+    git clone https://github.com/haiwen/libevhtp.git /root/dev/source-code/libevhtp && \
     git clone https://github.com/haiwen/libsearpc.git /root/dev/source-code/libsearpc && \
     git clone https://github.com/lovehunter9/seafile-server.git /root/dev/source-code/seafile-server
 
