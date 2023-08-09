@@ -15,7 +15,7 @@ ENV NODE_OPTIONS="--openssl-legacy-provider"
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends tzdata && \
     apt-get install -y --no-install-recommends git cmake && \
-    apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends curl sudo && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     apt-get install -y --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists/*
