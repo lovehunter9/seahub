@@ -2,8 +2,8 @@ FROM ubuntu:latest
 MAINTAINER wangrongxiang
 
 ENV NODE_OPTIONS="--openssl-legacy-provider"
-RUN apt-get update && \
-    apt-get upgrade && \
+RUN apt-get -y update && \
+    apt-get -y upgrade && \
     apt-get install -y curl sudo && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     sudo apt-get install -y nodejs
