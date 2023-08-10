@@ -14,8 +14,8 @@ on:
   push:
     branches:
       - master
-  release:
-    types: [published]
+#  release:
+#    types: [published]
 
 jobs:
   push_to_registry:
