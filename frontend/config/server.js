@@ -1,8 +1,8 @@
 'use strict';
 // https://github.com/webpack/webpack-dev-server/blob/master/examples/api/simple/server.js
 
-process.env.NODE_ENV = 'development';
-process.env.BABEL_ENV = 'development';
+process.env.NODE_ENV = 'production';
+process.env.BABEL_ENV = 'production';
 
 var Webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server')
