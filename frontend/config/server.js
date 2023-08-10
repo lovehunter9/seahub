@@ -7,7 +7,7 @@ process.env.BABEL_ENV = 'production';
 var Webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server')
 var configFactory = require('./webpack.config')
-var config = configFactory('development');
+var config = configFactory('production');
 
 const compiler = Webpack(config);
 const devServerOptions = Object.assign({}, config.devServer, {
