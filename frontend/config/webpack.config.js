@@ -187,7 +187,7 @@ module.exports = function (webpackEnv) {
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      output = Object.assign({}, output, {publicPath: '/assets/bundles/'});
+      output = Object.assign({}, output, {publicPath: '/'});
     }
     return output;
   };
