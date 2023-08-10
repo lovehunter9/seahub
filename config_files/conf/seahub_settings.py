@@ -16,7 +16,7 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'frontend/',
         'STATS_FILE': os.path.join(PROJECT_ROOT,
-                                   'frontend/webpack-stats.dev.json'),
+                                   'frontend/webpack-stats.prod.json'),
     }
 }
 DEBUG = True
