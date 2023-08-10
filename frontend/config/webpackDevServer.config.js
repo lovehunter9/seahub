@@ -15,6 +15,20 @@ const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
 module.exports = function (proxy, allowedHost) {
+  const disableFirewall =
+    !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
+ 
+  // 配置proxy对象解决跨域
+  proxy = {
+    ...proxy,
+    '/assets/bundles/': {
+      target: 'http://localhost:3000', // 后台服务地址以及端口号
+      changeOrigin: true, //是否跨域
+      // pathRewrite: { '^/assets/bundles/': '/' }, // 代理名称
+      secure: false
+    },
+  }
+
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -32,8 +46,8 @@ module.exports = function (proxy, allowedHost) {
     // So we will disable the host check normally, but enable it if you have
     // specified the `proxy` setting. Finally, we let you override it if you
     // really know what you're doing with a special environment variable.
-    disableHostCheck: true,
-      // !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
+    disableHostCheck: 
+       !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
     // Enable gzip compression of generated files.
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
