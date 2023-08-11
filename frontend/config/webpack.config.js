@@ -730,6 +730,7 @@ module.exports = function (webpackEnv) {
     devServer: {
       publicPath: getOutput(isEnvDevelopment).publicPath,
       hot: true,
+      disableHostCheck: true,
       contentBase: '../assets',
       historyApiFallback: true,
       headers: {
