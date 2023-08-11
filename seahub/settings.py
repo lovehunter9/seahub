@@ -12,7 +12,7 @@ PROJECT_ROOT = os.path.join(os.path.dirname(__file__), os.pardir)
 
 DEBUG = False
 
-SERVICE_URL = 'http://127.0.0.1:8000'
+SERVICE_URL = '/'
 FILE_SERVER_ROOT = 'http://127.0.0.1:' + FILE_SERVER_PORT
 
 CLOUD_MODE = False
