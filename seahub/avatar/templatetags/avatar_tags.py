@@ -56,8 +56,11 @@ def api_avatar_url(user, size=AVATAR_DEFAULT_SIZE):
 
     # urlparse('https://192.157.12.3:89/demo')
     # ParseResult(scheme='https', netloc='192.157.12.3:89', path='/demo', params='', query='', fragment='')
-    parse_result = urlparse(service_url)
-    service_url_without_sub_path = '%s://%s' % (parse_result[0], parse_result[1])
+    if service_url:
+        parse_result = urlparse(service_url)
+        service_url_without_sub_path = '%s://%s' % (parse_result[0], parse_result[1])
+    else:
+        service_url_without_sub_path = service_url
 
     avatar = get_primary_avatar(user, size=size)
 
