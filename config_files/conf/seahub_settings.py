@@ -8,7 +8,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-FILE_SERVER_ROOT = '/fileserver'
+FILE_SERVER_ROOT = '/seafhttp'
 
 import os
 PROJECT_ROOT = '/root/dev/source-code/seahub'
