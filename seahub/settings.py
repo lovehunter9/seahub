@@ -932,7 +932,7 @@ else:
 sys.path.pop(0)
 
 # Following settings are private, can not be overwrite.
-INNER_FILE_SERVER_ROOT = '/'
+INNER_FILE_SERVER_ROOT = 'http://localhost:8082'
 # INNER_FILE_SERVER_ROOT = 'http://127.0.0.1:' + FILE_SERVER_PORT
 
 CONSTANCE_ENABLED = ENABLE_SETTINGS_VIA_WEB
