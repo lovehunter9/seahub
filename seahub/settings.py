@@ -932,7 +932,8 @@ else:
 sys.path.pop(0)
 
 # Following settings are private, can not be overwrite.
-INNER_FILE_SERVER_ROOT = 'http://127.0.0.1:' + FILE_SERVER_PORT
+INNER_FILE_SERVER_ROOT = '/seafhttp'
+# INNER_FILE_SERVER_ROOT = 'http://127.0.0.1:' + FILE_SERVER_PORT
 
 CONSTANCE_ENABLED = ENABLE_SETTINGS_VIA_WEB
 CONSTANCE_CONFIG = {
