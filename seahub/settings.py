@@ -7,6 +7,7 @@ import os
 import re
 
 from seaserv import FILE_SERVER_PORT
+from corsheaders.middleware import CorsMiddleware
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), os.pardir)
 
