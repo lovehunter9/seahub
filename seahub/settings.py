@@ -693,7 +693,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOG_DIR, 'seahub.log'),
-            'maxBytes': 1024*1024*100,  # 100 MB
+            'maxBytes': 1024*1024*1024,  # 1G  # 1024*1024*100,  # 100 MB
             'backupCount': 5,
             'formatter': 'standard',
         },
@@ -713,19 +713,19 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': ['default'],
-            'level': 'INFO',
+            'handlers': ['default', 'console'],  # ['default'],
+            'level': 'DEBUG',  # 'INFO',
             'propagate': True
         },
         'django.request': {
-            'handlers': ['default', 'mail_admins'],
-            'level': 'INFO',
-            'propagate': False
+            'handlers': ['default', 'mail_admins', 'console'],  # ['default', 'mail_admins'],
+            'level': 'DEBUG',  # 'INFO',
+            'propagate': True  # False
         },
         'py.warnings': {
-            'handlers': ['console', ],
-            'level': 'INFO',
-            'propagate': False
+            'handlers': ['console', 'default'],  # ['console', ],
+            'level': 'DEBUG',  # 'INFO',
+            'propagate': True  # False
         },
         'onlyoffice': {
             'handlers': ['onlyoffice_handler', ],
