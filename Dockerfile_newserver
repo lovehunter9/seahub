@@ -61,8 +61,9 @@ COPY . ./
 COPY ./config_files /root/dev
 
 WORKDIR /root/dev/source-code/seahub/frontend
-RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev &&\
-    npm run build
+RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev && \
+    npm run build && \
+    npm install -g live-server
 
 WORKDIR /root/dev/source-code/seahub
 RUN pip install virtualenv && \
