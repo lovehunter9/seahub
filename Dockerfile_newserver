@@ -64,14 +64,14 @@ RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite c
 
 RUN apt-get uninstall -y --no-install-recommends tzdata && \
     apt-get uninstall -y --no-install-recommends curl && \
-    apt-get uninstall -y --no-install-recommends libevent-dev libcurl4-openssl-dev libglib2.0-dev uuid-dev intltool && \
-    apt-get uninstall -y --no-install-recommends libsqlite3-dev libarchive-dev libtool libjansson-dev libfuse-dev && \
-    apt-get uninstall -y --no-install-recommends re2c flex libssl-dev libonig-dev && \
-    apt-get uninstall -y --no-install-recommends librados-dev libxml2-dev telnet && \
-    apt-get uninstall -y --no-install-recommends ca-certificates apt-transport-https build-essential libxslt1-dev libffi-dev && \
+    apt-get uninstall -y --no-install-recommends libcurl4-openssl-dev && \
+    apt-get uninstall -y --no-install-recommends libarchive-dev libtool libjansson-dev valac libfuse-dev && \
+    apt-get uninstall -y --no-install-recommends cmake re2c flex git libssl-dev libonig-dev && \
+    apt-get uninstall -y --no-install-recommends wget gcc autoconf automake librados-dev libxml2-dev telnet && \
+    apt-get uninstall -y --no-install-recommends netcat unzip netbase ca-certificates apt-transport-https build-essential libxslt1-dev libffi-dev && \
     apt-get uninstall -y --no-install-recommends libpcre3-dev zlib1g-dev xz-utils nginx pkg-config poppler-utils libmemcached-dev libjwt-dev && \
     apt-get uninstall -y --no-install-recommends nodejs && \
-    apt-get uninstall -y --no-install-recommends libsasl2-dev slapd tox lcov valgrind \
+    apt-get uninstall -y --no-install-recommends libsasl2-dev slapd ldap-utils tox lcov valgrind
 
 #RUN apt-get uninstall -y --no-install-recommends tzdata && \
 #    apt-get uninstall -y --no-install-recommends curl sudo && \
