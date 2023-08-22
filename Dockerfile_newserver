@@ -18,7 +18,7 @@ RUN apt-get -y update && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     apt-get install -y --no-install-recommends nodejs && \
     apt-get install -y --no-install-recommends python3-pip python3 python3-dev && \
-    apt-get install -y --no-install-recommends build-essential libldap2-dev libsasl2-dev slapd ldap-utils tox lcov valgrind && \
+    apt-get install -y --no-install-recommends build-essential libsasl2-dev slapd ldap-utils tox lcov valgrind && \
     rm -rf /var/lib/apt/lists/*
 #    sudo python3 -m pip install --upgrade pip && \
 #    pip install python-cas djangosaml2 cffi sqlalchemy pymysql pillow pycryptodome configparser pylibmc django-pylibmc elasticsearch==5.5.0 elasticsearch-dsl==5.4.0 Django==2.2.14 future captcha django-statici18n django-post_office==3.3.0 django-webpack_loader==0.7.0 gunicorn mysqlclient django-picklefield==2.1.1 openpyxl qrcode django-formtools django-simple-captcha djangorestframework==3.11.1 python-dateutil requests pillow pyjwt pycryptodome requests_oauthlib mock nose exam splinter pytest pytest-django
@@ -40,7 +40,6 @@ RUN apt-get -y update && \
 
 WORKDIR /root/dev/source-code
 COPY . /root/dev/source-code/seahub
-COPY ./config_files /root/dev
 RUN git config --global http.sslverify false && \
     git config --global https.sslverify false && \
     git clone https://github.com/haiwen/libevhtp.git /root/dev/source-code/libevhtp && \
@@ -56,33 +55,29 @@ RUN ./autogen.sh && ./configure && make && sudo make install && sudo ldconfig
 WORKDIR ../seafile-server
 RUN ./autogen.sh && ./configure --disable-fuse && make && sudo make install && sudo ldconfig && rm -rf /root/dev/source-code
 
-WORKDIR /root/dev/source-code/seahub
-COPY . ./
-COPY ./config_files /root/dev
-
 WORKDIR /root/dev/source-code/seahub/frontend
 RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev && \
     npm run build && \
     rm -rf /root/dev/source-code/seahub/frontend/node_modules
 
 WORKDIR /root/dev/source-code/seahub
-RUN pip install virtualenv && \
-    virtualenv env
-ENV VIRTUAL_ENV env                     # activating environment
-ENV PATH env/bin:$PATH                  # activating environment
+#RUN pip install virtualenv && \
+#    virtualenv env
+#ENV VIRTUAL_ENV env                     # activating environment
+#ENV PATH env/bin:$PATH                  # activating environment
 
-ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart:$PYTHONPATH
+ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages/:/root/dev/source-code/seahub/thirdpart
+# :$PYTHONPATH
 ENV CCNET_CONF_DIR=/root/dev/conf
 ENV SEAFILE_CONF_DIR=/root/dev/seafile-data
 ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
-    pip install python-ldap && \
     chmod +x ./docker.sh
+    # pip install python-ldap && \
 
 EXPOSE 8082
 EXPOSE 8000
-EXPOSE 3000
 
 ENTRYPOINT ["./docker.sh"]
