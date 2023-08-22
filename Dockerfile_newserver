@@ -11,14 +11,14 @@ RUN apt-get -y update && \
     apt-get install -y --no-install-recommends curl sudo && \
     apt-get install -y --no-install-recommends libevent-dev libcurl4-openssl-dev libglib2.0-dev uuid-dev intltool && \
     apt-get install -y --no-install-recommends libsqlite3-dev libmysqlclient-dev libarchive-dev libtool libjansson-dev valac libfuse-dev && \
-    apt-get install -y --no-install-recommends cmake re2c flex sqlite3 git libssl-dev libldap2-dev libonig-dev && \
+    apt-get install -y --no-install-recommends cmake re2c flex sqlite3 git libssl-dev libonig-dev && \
     apt-get install -y --no-install-recommends gcc autoconf automake mysql-client librados-dev libxml2-dev telnet && \
     apt-get install -y --no-install-recommends netcat netbase ca-certificates apt-transport-https build-essential libxslt1-dev libffi-dev && \
     apt-get install -y --no-install-recommends libpcre3-dev zlib1g-dev xz-utils pkg-config poppler-utils libmemcached-dev libjwt-dev && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     apt-get install -y --no-install-recommends nodejs && \
     apt-get install -y --no-install-recommends python3-pip && \
-    apt-get install -y --no-install-recommends libsasl2-dev slapd ldap-utils tox lcov valgrind && \
+    apt-get install -y --no-install-recommends libsasl2-dev slapd tox lcov valgrind && \
     rm -rf /var/lib/apt/lists/*
 #    sudo python3 -m pip install --upgrade pip && \
 #    pip install python-cas djangosaml2 cffi sqlalchemy pymysql pillow pycryptodome configparser pylibmc django-pylibmc elasticsearch==5.5.0 elasticsearch-dsl==5.4.0 Django==2.2.14 future captcha django-statici18n django-post_office==3.3.0 django-webpack_loader==0.7.0 gunicorn mysqlclient django-picklefield==2.1.1 openpyxl qrcode django-formtools django-simple-captcha djangorestframework==3.11.1 python-dateutil requests pillow pyjwt pycryptodome requests_oauthlib mock nose exam splinter pytest pytest-django
@@ -74,10 +74,9 @@ ENV CCNET_CONF_DIR=/root/dev/conf
 ENV SEAFILE_CONF_DIR=/root/dev/seafile-data
 ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
 
-RUN pip install --upgrade pip && \
+RUN pip install python-ldap && \
     pip install -r requirements.txt && \
     chmod +x ./docker.sh
-    # pip install python-ldap && \
 
 EXPOSE 8082
 EXPOSE 8000
