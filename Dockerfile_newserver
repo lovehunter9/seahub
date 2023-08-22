@@ -58,9 +58,13 @@ WORKDIR /root/dev/source-code/seahub
 COPY . ./
 
 WORKDIR /root/dev/source-code/seahub/frontend
-RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev && \
+RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps && \
     npm run build && \
     rm -rf /root/dev/source-code/seahub/frontend/node_modules
+
+#RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps --save-dev && \
+#    npm run build && \
+#    rm -rf /root/dev/source-code/seahub/frontend/node_modules
 
 WORKDIR /root/dev/source-code/seahub
 #RUN pip install virtualenv && \
@@ -74,9 +78,9 @@ ENV CCNET_CONF_DIR=/root/dev/conf
 ENV SEAFILE_CONF_DIR=/root/dev/seafile-data
 ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
 
-RUN pip install python-ldap && \
-    pip install -r requirements.txt && \
-    chmod +x ./docker.sh
+RUN pip install -r requirements.txt && \
+    chmod +x ./docker.sh \
+#pip install python-ldap && \
 
 EXPOSE 8082
 EXPOSE 8000
