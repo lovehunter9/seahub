@@ -17,7 +17,7 @@ RUN apt-get -y update && \
     apt-get install -y --no-install-recommends libpcre3-dev zlib1g-dev xz-utils pkg-config poppler-utils libmemcached-dev libjwt-dev && \
     curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
     apt-get install -y --no-install-recommends nodejs && \
-    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get install -y --no-install-recommends python3-pip python3-dev && \
     apt-get install -y --no-install-recommends libsasl2-dev slapd tox lcov valgrind && \
     rm -rf /var/lib/apt/lists/*
 #    sudo python3 -m pip install --upgrade pip && \
