@@ -79,7 +79,7 @@ ENV SEAFILE_CONF_DIR=/root/dev/seafile-data
 ENV SEAFILE_CENTRAL_CONF_DIR=/root/dev/conf
 
 RUN pip install -r requirements.txt && \
-    chmod +x ./docker.sh \
+    chmod +x ./docker.sh
 #pip install python-ldap && \
 
 EXPOSE 8082
