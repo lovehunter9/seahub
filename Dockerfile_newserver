@@ -58,7 +58,7 @@ WORKDIR /root/dev/source-code/seahub
 COPY . ./
 
 WORKDIR /root/dev/source-code/seahub/frontend
-RUN npm install && \
+RUN npm install @babel/plugin-proposal-private-property-in-object caniuse-lite chart.js@^3.9.1 react-chartjs-2@^4.3.1 --legacy-peer-deps && \
     npm run build && \
     rm -rf /root/dev/source-code/seahub/frontend/node_modules
 
