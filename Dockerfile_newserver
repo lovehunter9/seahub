@@ -69,7 +69,6 @@ RUN apt-get remove -y curl && \
     apt-get remove -y wget gcc autoconf automake librados-dev libxml2-dev telnet && \
     apt-get remove -y netcat unzip netbase ca-certificates apt-transport-https libffi-dev && \
     apt-get remove -y libpcre3-dev zlib1g-dev xz-utils nginx pkg-config poppler-utils libmemcached-dev libjwt-dev && \
-    apt-get remove -y nodejs && \
     apt-get remove -y libsasl2-dev slapd ldap-utils tox lcov valgrind && \
     apt-get autoremove && apt-get autoclean
 
