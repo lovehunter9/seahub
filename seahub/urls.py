@@ -194,7 +194,7 @@ from seahub.api2.endpoints.admin.virus_scan_records import AdminVirusFilesView, 
 from seahub.api2.endpoints.file_participants import FileParticipantsView, FileParticipantView
 from seahub.api2.endpoints.repo_related_users import RepoRelatedUsersView
 from seahub.api2.endpoints.repo_auto_delete import RepoAutoDeleteView
-from seahub.api2.endpoints.callback import Callback
+from seahub.api2.endpoints.callback import CallbackCreate, CallbackDelete
 
 from seahub.ocm.settings import OCM_ENDPOINT
 
@@ -298,7 +298,8 @@ urlpatterns = [
 
     ## user
     re_path(r'^api/v2.1/user/$', User.as_view(), name="api-v2.1-user"),
-    path('/callback', Callback.as_view(), name="callback"),
+    path('/callback/create', CallbackCreate.as_view(), name="callback-create"),
+    path('/callback/delete', CallbackDelete.as_view(), name="callback-delete"),
 
     ## obtain auth token by login session
     re_path(r'^api/v2.1/auth-token-by-session/$', AuthTokenBySession.as_view(), name="api-v2.1-auth-token-by-session"),
