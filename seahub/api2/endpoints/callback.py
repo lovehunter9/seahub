@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
+import traceback
 
 from seahub.base.accounts import User
 
@@ -25,7 +26,11 @@ class CallbackCreate(APIView):
 
     def create_user(self, email):
         # 创建新用户的逻辑
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            print(traceback.format_exc())
+            user = None
         if user:
             print(f"Email {email} already exist. Ignore this procedure!")
         else:
@@ -51,7 +56,11 @@ class CallbackDelete(APIView):
 
     def delete_user(self, email):
         # 删除用户的逻辑
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            print(traceback.format_exc())
+            user = None
         if not user:
             print(f"Email {email} not existed. Ignore this procedure!")
         else:
