@@ -9,6 +9,7 @@ class CallbackCreate(APIView):
     def post(self, request, *args, **kwargs):
         # 获取POST请求的数据
         data = json.loads(request.body)
+        print(data)
 
         # 获取用户信息
         # user_data = data.get('data')
@@ -32,6 +33,7 @@ class CallbackDelete(APIView):
     def post(self, request, *args, **kwargs):
         # 获取POST请求的数据
         data = json.loads(request.body)
+        print(data)
 
         # 获取用户信息
         # user_data = data.get('data')
