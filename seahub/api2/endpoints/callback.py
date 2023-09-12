@@ -22,7 +22,7 @@ class CallbackCreate(APIView):
         # 返回成功响应
         return Response(status=200)
 
-    def create_user(self, username, email):
+    def create_user(self, email):
         # 创建新用户的逻辑
         User.objects.create_user(email=email, password="abcd123456", is_staff=False, is_active=True)
         return
@@ -43,7 +43,7 @@ class CallbackDelete(APIView):
         # 返回成功响应
         return Response(status=200)
 
-    def delete_user(self, username):
+    def delete_user(self, email):
         # 删除用户的逻辑
-        User.objects.get(email=username).delete()
+        User.objects.get(email=email).delete()
         return
