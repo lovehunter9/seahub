@@ -25,7 +25,11 @@ class CallbackCreate(APIView):
 
     def create_user(self, email):
         # 创建新用户的逻辑
-        User.objects.create_user(email=email, password="abcd123456", is_staff=False, is_active=True)
+        user = User.objects.get(email=email)
+        if user:
+            print(f"Email {email} already exist. Ignore this procedure!")
+        else:
+            User.objects.create_user(email=email, password="abcd123456", is_staff=False, is_active=True)
         return
 
 
@@ -47,5 +51,9 @@ class CallbackDelete(APIView):
 
     def delete_user(self, email):
         # 删除用户的逻辑
-        User.objects.get(email=email).delete()
+        user = User.objects.get(email=email)
+        if not user:
+            print(f"Email {email} not existed. Ignore this procedure!")
+        else:
+            user.delete()
         return
