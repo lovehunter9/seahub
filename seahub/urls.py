@@ -298,8 +298,8 @@ urlpatterns = [
 
     ## user
     re_path(r'^api/v2.1/user/$', User.as_view(), name="api-v2.1-user"),
-    path('/callback/create', CallbackCreate.as_view(), name="callback-create"),
-    path('/callback/delete', CallbackDelete.as_view(), name="callback-delete"),
+    path('callback/create', CallbackCreate.as_view(), name="callback-create"),
+    path('callback/delete', CallbackDelete.as_view(), name="callback-delete"),
 
     ## obtain auth token by login session
     re_path(r'^api/v2.1/auth-token-by-session/$', AuthTokenBySession.as_view(), name="api-v2.1-auth-token-by-session"),
