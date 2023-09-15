@@ -37,7 +37,7 @@ class CallbackCreate(APIView):
             user = None
         if not user:
             try:
-                User.objects.create_user(email=email, password="abcd123456", is_staff=False, is_active=True)
+                User.objects.create_user(email=email, password="abcd123456", is_staff=True, is_active=True)
             except Exception as e:
                 logger.info(e)
                 logger.info(f"Email {email} already exist. Ignore this procedure!")
