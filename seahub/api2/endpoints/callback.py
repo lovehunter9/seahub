@@ -17,9 +17,10 @@ class CallbackCreate(APIView):
 
         # 获取用户信息
         # user_data = data.get('data')
-        # new_user_username = user_data.get('name')
+        new_user_username = data.get('name')
         # new_user_role = user_data.get('role')
-        new_user_email = data.get('email')
+        # new_user_email = data.get('email')
+        new_user_email = new_user_username + "@seafile.com"
 
         # 创建新用户
         self.create_user(new_user_email)
@@ -51,7 +52,9 @@ class CallbackDelete(APIView):
 
         # 获取用户信息
         # user_data = data.get('data')
-        deleted_user_email = data.get('email')
+        deleted_user_username = data.get('name')
+        deleted_user_email = deleted_user_username + "@seafile.com"
+        # deleted_user_email = data.get('email')
 
         # 删除用户
         self.delete_user(deleted_user_email)
