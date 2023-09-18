@@ -22,12 +22,12 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
 
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
-            # can_pass = False
-            # username = request.user.username
-            # bfl_username = request.headers.get('x-bfl-user')
-            # if username.split("@")[0] == bfl_username:
-            #     can_pass = True
-            # print(username, bfl_username, can_pass)
+            can_pass = False
+            username = request.user.username
+            bfl_username = request.headers.get('x-bfl-user')
+            if username.split("@")[0] == bfl_username:
+                can_pass = True
+            print(username, bfl_username, can_pass)
             if test_func(request.user):
                 return view_func(request, *args, **kwargs)
             path = quote(request.get_full_path())
@@ -71,12 +71,12 @@ def login_required_ajax(function=None,redirect_field_name=None):
             if not request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 raise Http404
 
-            # can_pass = False
-            # username = request.user.username
-            # bfl_username = request.headers.get('x-bfl-user')
-            # if username.split("@")[0] == bfl_username:
-            #     can_pass = True
-            # print(username, bfl_username, can_pass)
+            can_pass = False
+            username = request.user.username
+            bfl_username = request.headers.get('x-bfl-user')
+            if username.split("@")[0] == bfl_username:
+                can_pass = True
+            print(username, bfl_username, can_pass)
 
             if request.user.is_authenticated:
                 return view_func(request, *args, **kwargs)
