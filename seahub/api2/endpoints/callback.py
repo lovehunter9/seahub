@@ -17,13 +17,14 @@ class CallbackCreate(APIView):
 
         # 获取用户信息
         # user_data = data.get('data')
-        new_user_username = data.get('name')
-        # new_user_role = user_data.get('role')
-        # new_user_email = data.get('email')
-        new_user_email = new_user_username + "@seafile.com"
+        new_user_username = data.get('name').strip()
+        if new_user_username:
+            # new_user_role = user_data.get('role')
+            # new_user_email = data.get('email')
+            new_user_email = new_user_username + "@seafile.com"
 
-        # 创建新用户
-        self.create_user(new_user_email)
+            # 创建新用户
+            self.create_user(new_user_email)
 
         # 返回成功响应
         return Response(status=200)
