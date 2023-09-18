@@ -34,7 +34,7 @@ class User(APIView):
 
         info = {}
         info['email'] = email
-        info['name'] = email2nickname(email)
+        info['name'] = email2nickname(email2contact_email(email))
         info['contact_email'] = email2contact_email(email)
         info['telephone'] = d_profile.telephone if d_profile else ''
         info['login_id'] = profile.login_id if profile else ''
