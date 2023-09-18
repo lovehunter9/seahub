@@ -47,13 +47,13 @@ class UserSelect extends React.Component {
             const item = res.data.users[i];
             let obj = {};
             obj.value = item.name;
-            obj.email = item.email;
+            obj.email = item.contact_email;
             obj.label = enableShowContactEmailWhenSearchUser ? (
               <div className="d-flex">
                 <img src={item.avatar_url} className="avatar" width="24" alt="" />
                 <div className="ml-2">
                   <span className="user-option-name">{item.name}</span><br />
-                  <span className="user-option-email">{item.contact_email}</span>
+                  <span className="user-option-email">{item.email}</span>
                 </div>
               </div>
             ) : (
