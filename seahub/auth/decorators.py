@@ -27,7 +27,8 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
             bfl_username = request.headers.get('x-bfl-user')
             if username.split("@")[0] == bfl_username:
                 can_pass = True
-            if can_pass and test_func(request.user):
+            print(username, bfl_username, can_pass)
+            if test_func(request.user):
                 return view_func(request, *args, **kwargs)
             path = quote(request.get_full_path())
             tup = login_url, redirect_field_name, path
@@ -75,8 +76,9 @@ def login_required_ajax(function=None,redirect_field_name=None):
             bfl_username = request.headers.get('x-bfl-user')
             if username.split("@")[0] == bfl_username:
                 can_pass = True
+            print(username, bfl_username, can_pass)
 
-            if can_pass and request.user.is_authenticated:
+            if request.user.is_authenticated:
                 return view_func(request, *args, **kwargs)
             else:
                 content_type = 'application/json; charset=utf-8'
