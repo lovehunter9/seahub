@@ -33,7 +33,7 @@ class RepoHistory(APIView):
         email = getattr(commit, 'creator_name', '')
         item_info = {
             'email': email,
-            "name": email2nickname(email),
+            "name": email2nickname(email2contact_email(email)),
             "contact_email": email2contact_email(email),
             'time': timestamp_to_isoformat_timestr(commit.ctime),
             'commit_id': commit.id,

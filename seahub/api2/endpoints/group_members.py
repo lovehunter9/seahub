@@ -20,7 +20,7 @@ from seahub.api2.endpoints.utils import is_org_user
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.authentication import TokenAuthentication
 from seahub.avatar.settings import AVATAR_DEFAULT_SIZE
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import string2list, is_org_context, get_file_type_and_ext
 from seahub.utils.ms_excel import write_xls
 from seahub.utils.error_msg import file_type_error_msg
@@ -107,13 +107,13 @@ class GroupMembers(APIView):
 
         try:
             if is_group_member(group_id, email):
-                error_msg = _('User %s is already a group member.') % email2nickname(email)
+                error_msg = _('User %s is already a group member.') % email2nickname(email2contact_email(email))
                 return api_error(status.HTTP_400_BAD_REQUEST, error_msg)
 
             if is_org_context(request):
                 org_id = request.user.org.org_id
                 if not ccnet_api.org_user_exists(org_id, email):
-                    error_msg = _('User %s not found in organization.') % email2nickname(email)
+                    error_msg = _('User %s not found in organization.') % email2nickname(email2contact_email(email))
                     return api_error(status.HTTP_404_NOT_FOUND, error_msg)
             elif is_org_user(email):
                 error_msg = _('User %s is an organization user.') % email
@@ -325,7 +325,7 @@ class GroupMembersBulk(APIView):
             org_id = request.user.org.org_id
 
         for email in emails_list:
-            email_name = email2nickname(email)
+            email_name = email2nickname(email2contact_email(email))
             try:
                 User.objects.get(email=email)
             except User.DoesNotExist:
@@ -473,7 +473,7 @@ class GroupMembersImport(APIView):
                 except User.DoesNotExist:
                     user_not_found = True
 
-            email_name = email2nickname(email)
+            email_name = email2nickname(email2contact_email(email))
             if user_not_found:
                 result['failed'].append({
                     'email': email,

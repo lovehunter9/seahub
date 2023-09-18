@@ -119,7 +119,7 @@ class ReposView(APIView):
                     "repo_id": r.id,
                     "repo_name": r.name,
                     "owner_email": email,
-                    "owner_name": email2nickname(email),
+                    "owner_name": email2nickname(email2contact_email(email)),
                     "owner_contact_email": email2contact_email(email),
                     "last_modified": timestamp_to_isoformat_timestr(r.last_modify),
                     "modifier_email": r.last_modifier,

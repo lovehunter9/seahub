@@ -18,7 +18,7 @@ from seahub.api2.serializers import AccountSerializer
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error, to_python_boolean
 from seahub.base.accounts import User
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.profile.models import Profile, DetailedProfile
 from seahub.institutions.models import Institution
 from seahub.utils import is_valid_username, is_org_context
@@ -36,7 +36,7 @@ def get_account_info(user):
 
     info = {}
     info['email'] = email
-    info['name'] = email2nickname(email)
+    info['name'] = email2nickname(email2contact_email(email))
     info['department'] = d_profile.department if d_profile else ''
     info['institution'] = profile.institution if profile else ''
     info['id'] = user.id

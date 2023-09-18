@@ -92,7 +92,7 @@ class OrgAdminRepos(APIView):
                     repo_owner_dict[email]['is_department_repo'] = True
 
                 else:
-                    repo_owner_dict[email]['owner_name'] = email2nickname(email)
+                    repo_owner_dict[email]['owner_name'] = email2nickname(email2contact_email(email))
                     repo_owner_dict[email]['group_id'] = ''
                     repo_owner_dict[email]['is_department_repo'] = False
 

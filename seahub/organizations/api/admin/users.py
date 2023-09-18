@@ -515,7 +515,7 @@ def get_user_info(email, org_id):
 
     info = {}
     info['email'] = email
-    info['name'] = email2nickname(email)
+    info['name'] = email2nickname(email2contact_email(email))
     info['contact_email'] = email2contact_email(email)
 
     try:

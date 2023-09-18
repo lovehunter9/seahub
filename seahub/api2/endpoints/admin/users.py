@@ -256,7 +256,7 @@ def get_user_info(email):
 
     info = {}
     info['email'] = email
-    info['name'] = email2nickname(email)
+    info['name'] = email2nickname(email2contact_email(email))
     info['contact_email'] = profile.contact_email if profile and profile.contact_email else ''
     info['login_id'] = profile.login_id if profile and profile.login_id else ''
 
@@ -1465,7 +1465,7 @@ class AdminUserBeSharedRepos(APIView):
                     group_name = group_id_to_name(group_id)
                     nickname_dict[email] = group_name
                 else:
-                    nickname_dict[email] = email2nickname(email)
+                    nickname_dict[email] = email2nickname(email2contact_email(email))
 
         repos_info = []
         for repo in beshared_repos:

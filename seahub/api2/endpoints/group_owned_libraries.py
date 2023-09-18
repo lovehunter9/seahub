@@ -259,7 +259,7 @@ class GroupOwnedLibraryUserFolderPermission(APIView):
         if email and repo_id and path and perm:
             result['repo_id'] = repo_id
             result['user_email'] = email
-            result['user_name'] = email2nickname(email)
+            result['user_name'] = email2nickname(email2contact_email(email))
             result['folder_path'] = path
             result['folder_name'] = path if path == '/' else os.path.basename(path.rstrip('/'))
             result['permission'] = perm
@@ -833,7 +833,7 @@ class GroupOwnedLibraryUserShare(APIView):
             email = item.user
             ret.append({
                 "user_email": email,
-                "user_name": email2nickname(email),
+                "user_name": email2nickname(email2contact_email(email)),
                 "user_contact_email": email2contact_email(email),
                 "permission": item.perm
             })

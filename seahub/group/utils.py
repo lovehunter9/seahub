@@ -9,7 +9,7 @@ from seaserv import ccnet_api
 
 from seahub.utils import is_org_context, normalize_cache_key
 from seahub.profile.models import Profile
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.avatar.settings import AVATAR_DEFAULT_SIZE
 from seahub.avatar.templatetags.avatar_tags import api_avatar_url, \
     get_default_avatar_url
@@ -107,7 +107,7 @@ def get_group_member_info(request, group_id, email, avatar_size=AVATAR_DEFAULT_S
 
     member_info = {
         'group_id': group_id,
-        "name": email2nickname(email),
+        "name": email2nickname(email2contact_email(email)),
         'email': email,
         "contact_email": Profile.objects.get_contact_email_by_user(email),
         "login_id": login_id,

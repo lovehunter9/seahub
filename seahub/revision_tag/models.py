@@ -85,7 +85,7 @@ class RevisionTags(models.Model):
                      "repo_id": self.repo_id,
                      "commit_id": self.revision_id,
                      "email": email,
-                     "name": email2nickname(email),
+                     "name": email2nickname(email2contact_email(email)),
                      "contact_email": email2contact_email(email),
                      "time": timestamp_to_isoformat_timestr(commit.ctime),
                      "description": commit.desc,

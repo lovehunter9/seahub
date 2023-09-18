@@ -71,7 +71,7 @@ class MonitoredRepos(APIView):
         # get info of new monitored repo
         item_info = {}
         item_info['user_email'] = email
-        item_info['user_name'] = email2nickname(email)
+        item_info['user_name'] = email2nickname(email2contact_email(email))
         item_info['user_contact_email'] = email2contact_email(email)
         item_info['repo_id'] = repo_id
 

@@ -44,7 +44,7 @@ def get_org_user_info(org_id, user_obj):
 
     user_info['org_id'] = org_id
     user_info['email'] = email
-    user_info['name'] = email2nickname(email)
+    user_info['name'] = email2nickname(email2contact_email(email))
     user_info['contact_email'] = email2contact_email(email)
 
     org_user_quota = seafile_api.get_org_user_quota(org_id, email)

@@ -89,7 +89,7 @@ def get_user_name_dict(email_list):
     user_name_dict = {}
     for email in email_list:
         if email not in user_name_dict:
-            user_name_dict[email] = email2nickname(email)
+            user_name_dict[email] = email2nickname(email2contact_email(email))
 
     return user_name_dict
 

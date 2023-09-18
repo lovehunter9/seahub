@@ -21,7 +21,7 @@ from seahub.share.utils import update_user_dir_permission, \
 from seahub.share.signals import share_repo_to_user_successful, share_repo_to_group_successful
 
 from seahub.base.accounts import User
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import is_valid_username, send_perm_audit_msg
 from seahub.utils.repo import get_available_repo_perms
 from seahub.constants import PERMISSION_READ, PERMISSION_READ_WRITE, \
@@ -235,7 +235,7 @@ class AdminShares(APIView):
                     "path": path,
                     "share_type": share_type,
                     "user_email": email,
-                    "user_name": email2nickname(email),
+                    "user_name": email2nickname(email2contact_email(email)),
                     "permission": PERMISSION_READ_WRITE if permission == PERMISSION_ADMIN else permission,
                     "is_admin": permission == PERMISSION_ADMIN
                 })
@@ -354,7 +354,7 @@ class AdminShares(APIView):
                 return api_error(status.HTTP_500_INTERNAL_SERVER_ERROR, error_msg)
 
             share_info['user_email'] = email
-            share_info['user_name'] = email2nickname(email)
+            share_info['user_name'] = email2nickname(email2contact_email(email))
             share_info['permission'] = PERMISSION_READ_WRITE if permission == PERMISSION_ADMIN else permission
             share_info['is_admin'] = permission == PERMISSION_ADMIN
 

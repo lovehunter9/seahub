@@ -181,7 +181,7 @@ def format_searched_user_result(request, users, size):
         results.append({
             "email": email,
             "avatar_url": url,
-            "name": email2nickname(email),
+            "name": email2nickname(email2contact_email(email)),
             "contact_email": email2contact_email(email),
         })
 

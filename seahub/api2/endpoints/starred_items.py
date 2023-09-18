@@ -111,7 +111,7 @@ class StarredItems(APIView):
 
             email = starred_item.email
             item_info['user_email'] = email
-            item_info['user_name'] = email2nickname(email)
+            item_info['user_name'] = email2nickname(email2contact_email(email))
             item_info['user_contact_email'] = email2contact_email(email)
 
             if path == '/':
@@ -187,7 +187,7 @@ class StarredItems(APIView):
         # get info of new starred item
         item_info = self.get_starred_item_info(repo, starred_item)
         item_info['user_email'] = email
-        item_info['user_name'] = email2nickname(email)
+        item_info['user_name'] = email2nickname(email2contact_email(email))
         item_info['user_contact_email'] = email2contact_email(email)
 
         return Response(item_info)

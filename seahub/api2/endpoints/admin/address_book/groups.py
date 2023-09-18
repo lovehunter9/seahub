@@ -148,7 +148,7 @@ class AdminAddressBookGroup(APIView):
             'group_id': group_id,
             'group_name': group.group_name,
             'email': email,
-            "name": email2nickname(email),
+            "name": email2nickname(email2contact_email(email)),
             "contact_email": email2contact_email(email),
             "avatar_url": avatar_url,
             "is_admin": is_admin,

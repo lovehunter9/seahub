@@ -321,7 +321,7 @@ class AccountInfo(APIView):
 
         info['avatar_url'] = url
         info['email'] = email
-        info['name'] = email2nickname(email)
+        info['name'] = email2nickname(email2contact_email(email))
         info['total'] = quota_total
         info['usage'] = quota_usage
         info['login_id'] = p.login_id if p and p.login_id else ""
@@ -715,7 +715,7 @@ class Repos(APIView):
             filter_by[f] = True
 
         email = request.user.username
-        owner_name = email2nickname(email)
+        owner_name = email2nickname(email2contact_email(email))
         owner_contact_email = email2contact_email(email)
 
         # Use dict to reduce memcache fetch cost in large for-loop.
@@ -5437,7 +5437,7 @@ class RepoUserFolderPerm(APIView):
         if email and repo_id and path and perm:
             result['repo_id'] = repo_id
             result['user_email'] = email
-            result['user_name'] = email2nickname(email)
+            result['user_name'] = email2nickname(email2contact_email(email))
             result['folder_path'] = path
             result['folder_name'] = path if path == '/' else os.path.basename(path.rstrip('/'))
             result['permission'] = perm

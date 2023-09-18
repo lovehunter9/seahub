@@ -18,7 +18,7 @@ from seahub.api2.endpoints.utils import is_org_user
 
 from seahub.utils import is_valid_email
 from seahub.base.accounts import User
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.profile.models import Profile
 
 logger = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ def get_user_info(email):
 
     info = {}
     info['email'] = email
-    info['name'] = email2nickname(email)
+    info['name'] = email2nickname(email2contact_email(email))
     info['contact_email'] = profile.contact_email if profile and profile.contact_email else ''
 
     return info

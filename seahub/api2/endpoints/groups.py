@@ -161,7 +161,7 @@ class Groups(APIView):
                             group_name = group_id_to_name(group_id)
                             name_dict[email] = group_name
                         else:
-                            name_dict[email] = email2nickname(email)
+                            name_dict[email] = email2nickname(email2contact_email(email))
 
                     if email not in contact_email_dict:
                         if '@seafile_group' in email:

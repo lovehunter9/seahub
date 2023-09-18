@@ -259,7 +259,7 @@ def get_user_common_info(email, avatar_size=AVATAR_DEFAULT_SIZE):
     avatar_url, is_default, date_uploaded = api_avatar_url(email, avatar_size)
     return {
         "email": email,
-        "name": email2nickname(email),
+        "name": email2nickname(email2contact_email(email)),
         "contact_email": email2contact_email(email),
         "avatar_url": avatar_url
     }

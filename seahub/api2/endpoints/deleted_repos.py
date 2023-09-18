@@ -35,7 +35,7 @@ class DeletedRepos(APIView):
             trash = {
                     "repo_id": r.repo_id,
                     "owner_email": email,
-                    "owner_name": email2nickname(email),
+                    "owner_name": email2nickname(email2contact_email(email)),
                     "owner_contact_email": email2contact_email(email),
                     "repo_name": r.repo_name,
                     "org_id": r.org_id,
