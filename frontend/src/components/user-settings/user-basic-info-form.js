@@ -73,15 +73,15 @@ class UserBasicInfoForm extends React.Component {
           </div>
         )}
 
-        {(contactEmail || enableUserSetContactEmail) && (
-          <div className="form-group row">
-            <label className="col-sm-1 col-form-label" htmlFor="contact-email">{gettext('Contact Email:')}</label>
-            <div className="col-sm-5">
-              <input className="form-control" id="contact-email" type="text" name="contact_email" value={contactEmail} disabled={!enableUserSetContactEmail} readOnly={!enableUserSetContactEmail} onChange={this.handleContactEmailInputChange} />
-            </div>
-            <p className="col-sm-5 m-0 input-tip">{gettext('Your notifications will be sent to this email.')}</p>
-          </div>
-        )}
+        {/*{(contactEmail || enableUserSetContactEmail) && (*/}
+        {/*  <div className="form-group row">*/}
+        {/*    <label className="col-sm-1 col-form-label" htmlFor="contact-email">{gettext('Contact Email:')}</label>*/}
+        {/*    <div className="col-sm-5">*/}
+        {/*      <input className="form-control" id="contact-email" type="text" name="contact_email" value={contactEmail} disabled={!enableUserSetContactEmail} readOnly={!enableUserSetContactEmail} onChange={this.handleContactEmailInputChange} />*/}
+        {/*    </div>*/}
+        {/*    <p className="col-sm-5 m-0 input-tip">{gettext('Your notifications will be sent to this email.')}</p>*/}
+        {/*  </div>*/}
+        {/*)}*/}
 
         <button type="submit" className="btn btn-outline-primary offset-sm-1" disabled={!enableUpdateUserInfo}>{gettext('Submit')}</button>
       </form>
