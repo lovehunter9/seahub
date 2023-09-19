@@ -5,9 +5,36 @@ import logging
 
 from seahub.base.accounts import User
 from seahub.profile.models import Profile
+from seaserv import seafile_api, ccnet_api
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 
 logger = logging.getLogger(__name__)
+
+
+def list_all_users():
+    total_count = ccnet_api.count_emailusers('DB') + \
+                      ccnet_api.count_inactive_emailusers('DB')
+
+    users = ccnet_api.get_emailusers('DB', 0, total_count)
+
+    data = {}
+    for user in users:
+        profile = Profile.objects.get_profile_by_user(user.email)
+
+        info = {}
+        info['email'] = user.email
+        info['name'] = email2nickname(user.email)
+        info['contact_email'] = email2contact_email(user.email)
+        info['login_id'] = profile.login_id if profile and profile.login_id else ''
+
+        info['is_staff'] = user.is_staff
+        info['is_active'] = user.is_active
+
+        data[info['contact_email']] = info
+
+    # result = {'data': data, 'total_count': total_count}
+    return data
 
 
 class CallbackCreate(APIView):
@@ -32,9 +59,10 @@ class CallbackCreate(APIView):
 
     def create_user(self, email):
         # 创建新用户的逻辑
-        contact_email = Profile.objects.get_contact_email_by_user(email)
-        if contact_email:
-            logger.info(f"Contact Email {contact_email} already exist. Ignore this procedure!")
+        all_users = list_all_users()
+        existed_user = all_users.get(email)
+        if existed_user and existed_user.get("email"):
+            logger.info(f"Contact Email {email} with Virtual Email {existed_user['email']} already exist. Ignore this procedure!")
             return
 
         try:
