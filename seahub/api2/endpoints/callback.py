@@ -35,6 +35,7 @@ class CallbackCreate(APIView):
             user = User.objects.get(email=email)
         except User.DoesNotExist as e:
             logger.info(e)
+            logger.info(f"Email {email} not exist. Will do this procedure!")
             user = None
         if not user:
             try:
