@@ -4,6 +4,7 @@ import json
 import logging
 
 from seahub.base.accounts import User
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 
 logger = logging.getLogger(__name__)
@@ -31,18 +32,23 @@ class CallbackCreate(APIView):
 
     def create_user(self, email):
         # 创建新用户的逻辑
+        if email2contact_email(email):
+            logger.info(f"Contact Email {email} already exist. Ignore this procedure!")
+
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist as e:
             logger.info(e)
             logger.info(f"Email {email} not exist. Will do this procedure!")
             user = None
-        if not user:
+        if user:
+            logger.info(f"Email {email} already exist. Ignore this procedure!")
+        else:
             try:
                 User.objects.create_user(email=email, password="abcd123456", is_staff=True, is_active=True)
             except Exception as e:
                 logger.info(e)
-                logger.info(f"Email {email} already exist. Ignore this procedure!")
+                logger.info(f"Create Email {email} has found it already exist. Ignore this procedure! Beware this causes a virtual user remained.")
         return
 
 
