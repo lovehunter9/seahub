@@ -59,7 +59,7 @@ def get_upload_link_info(uls):
 
     ccnet_email = uls.username
     data['creator_email'] = ccnet_email
-    data['creator_name'] = email2nickname(ccnet_email)
+    data['creator_name'] = email2nickname(email2contact_email(ccnet_email))
     data['creator_contact_email'] = email2contact_email(ccnet_email)
 
     return data
@@ -122,7 +122,7 @@ class AdminUploadLinks(APIView):
         owner_email_set = set([link.username for link in upload_links])
         for e in owner_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
 
         upload_links_info = []
         for link in upload_links:

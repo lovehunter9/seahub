@@ -19,7 +19,7 @@ from seahub.api2.endpoints.admin.address_book.groups import (
 from seahub.organizations.api.permissions import IsOrgAdmin
 from seahub.organizations.api.utils import check_org_admin
 from seahub.utils import is_pro_version
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils.timeutils import timestamp_to_isoformat_timestr
 from seahub.group.utils import validate_group_name, set_group_name_cache
 
@@ -129,7 +129,7 @@ class AdminAddressBookGroup(APIView):
             "id": group.id,
             "name": group.group_name,
             "owner": group.creator_name,
-            "owner_name": email2nickname(group.creator_name),
+            "owner_name": email2nickname(email2contact_email(group.creator_name)),
             "created_at": isoformat_timestr,
             "quota": seafile_api.get_group_quota(group_id) if is_pro_version() else 0,
             "parent_group_id": group.parent_group_id if is_pro_version() else 0

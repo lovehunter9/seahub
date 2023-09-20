@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from seaserv import seafile_api
 
 from seahub.base.fields import LowerCaseCharField
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import get_site_scheme_and_netloc
 from seahub.utils.timeutils import (timestamp_to_isoformat_timestr,
                                     datetime_to_isoformat_timestr)
@@ -101,7 +101,7 @@ class Wiki(models.Model):
         return {
             'id': self.pk,
             'owner': self.username,
-            'owner_nickname': email2nickname(self.username),
+            'owner_nickname': email2nickname(email2contact_email(self.username)),
             'name': self.name,
             'slug': self.slug,
             'link': self.link,

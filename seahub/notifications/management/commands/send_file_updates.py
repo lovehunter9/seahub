@@ -13,7 +13,7 @@ from django.utils.translation import gettext as _
 
 from seahub.avatar.templatetags.avatar_tags import avatar
 from seahub.avatar.util import get_default_avatar_url
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.constants import HASH_URLS
 from seahub.options.models import (
     UserOptions, KEY_FILE_UPDATES_EMAIL_INTERVAL,
@@ -243,7 +243,7 @@ class Command(BaseCommand):
                 for ele in res:
                     ele.user_avatar = self.get_avatar_src(ele.op_user)
                     ele.local_timestamp = utc_to_local(ele.timestamp)
-                    ele.op_user_link = a_tag(email2nickname(ele.op_user),
+                    ele.op_user_link = a_tag(email2nickname(email2contact_email(ele.op_user)),
                                              user_info_url(ele.op_user))
                     ele.operation, ele.op_details = self.format_file_operation(ele)
             except Exception as e:
@@ -255,7 +255,7 @@ class Command(BaseCommand):
                 self.stderr.write('[%s]: %s' % (str(datetime.now()), e))
                 continue
 
-            nickname = email2nickname(username)
+            nickname = email2nickname(email2contact_email(username))
             contact_email = Profile.objects.get_contact_email_by_user(username)
 
             c = {

@@ -158,7 +158,7 @@ def search_files(repos_map, search_path, keyword, obj_desc, start, size, org_id=
 
         # if match multiple files, keep the lookup only once.
         if not hasattr(repo, 'owner_nickname') or not repo.owner_nickname:
-            repo.owner_nickname = email2nickname(repo.owner)
+            repo.owner_nickname = email2nickname(email2contact_email(repo.owner))
 
         if not hasattr(repo, 'owner_contact_email') or not repo.owner_contact_email:
             repo.owner_contact_email = email2contact_email(repo.owner)

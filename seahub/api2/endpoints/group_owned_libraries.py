@@ -978,7 +978,7 @@ class GroupOwnedLibraryUserShare(APIView):
 
             result['success'].append({
                 "user_email": to_user,
-                "user_name": email2nickname(to_user),
+                "user_name": email2nickname(email2contact_email(to_user)),
                 "user_contact_email": email2contact_email(to_user),
                 "permission": permission,
             })

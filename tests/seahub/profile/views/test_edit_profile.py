@@ -1,6 +1,6 @@
 from django.urls import reverse
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.profile.models import Profile
 from seahub.test_utils import BaseTestCase
 from tests.common.utils import randstring
@@ -18,11 +18,11 @@ class EditProfileTest(BaseTestCase):
         self.remove_user(self.tmp_user.username)
 
     def test_can_edit(self):
-        assert email2nickname(self.tmp_user.username) == self.tmp_user.username.split('@')[0]
+        assert email2nickname(email2contact_email(self.tmp_user.username)) == self.tmp_user.username.split('@')[0]
 
         resp = self.client.post(self.url, {
             'nickname': 'new nickname'
         })
         self.assertEqual(302, resp.status_code)
         self.assertRegex(resp['Location'], r'/profile/')
-        assert email2nickname(self.tmp_user.username) == 'new nickname'
+        assert email2nickname(email2contact_email(self.tmp_user.username)) == 'new nickname'

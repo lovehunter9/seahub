@@ -70,11 +70,11 @@ class SharedRepos(APIView):
             result['share_type'] = repo.share_type
             result['share_permission'] = repo.permission
             result['modifier_email'] = repo.last_modifier
-            result['modifier_name'] = email2nickname(repo.last_modifier)
+            result['modifier_name'] = email2nickname(email2contact_email(repo.last_modifier))
             result['modifier_contact_email'] = email2contact_email(repo.last_modifier)
 
             if repo.share_type == 'personal':
-                result['user_name'] = email2nickname(repo.user)
+                result['user_name'] = email2nickname(email2contact_email(repo.user))
                 result['user_email'] = repo.user
                 result['contact_email'] = Profile.objects.get_contact_email_by_user(repo.user)
                 usernames.append((repo.repo_id, repo.user))

@@ -18,7 +18,7 @@ from seahub.utils.repo import is_repo_owner, get_repo_owner, \
         add_encrypted_repo_secret_key_to_database
 from seahub.base.models import RepoSecretKey
 from seahub.views import check_folder_permission
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 from seahub.settings import ENABLE_RESET_ENCRYPTED_REPO_PASSWORD
 
@@ -110,7 +110,7 @@ class RepoSetPassword(APIView):
         repo_owner = get_repo_owner(request, repo_id)
 
         if '@seafile_group' in repo_owner:
-            group_id = email2nickname(repo_owner)
+            group_id = email2nickname(email2contact_email(repo_owner))
             if not ccnet_api.check_group_staff(int(group_id), username):
                 error_msg = 'Permission denied.'
                 return api_error(status.HTTP_403_FORBIDDEN, error_msg)

@@ -27,7 +27,7 @@ class RepoViewTest(BaseTestCase):
         assert json_resp['repo_name'] == self.repo.name
 
         assert json_resp['owner_email'] == self.user_name
-        assert json_resp['owner_name'] == email2nickname(self.user_name)
+        assert json_resp['owner_name'] == email2nickname(email2contact_email(self.user_name))
         assert json_resp['owner_contact_email'] == email2contact_email(self.user_name)
 
         assert json_resp['permission'] == 'rw'
@@ -60,7 +60,7 @@ class RepoViewTest(BaseTestCase):
         assert json_resp['repo_name'] == admin_repo.name
 
         assert json_resp['owner_email'] == self.admin_name
-        assert json_resp['owner_name'] == email2nickname(self.admin_name)
+        assert json_resp['owner_name'] == email2nickname(email2contact_email(self.admin_name))
         assert json_resp['owner_contact_email'] == email2contact_email(self.admin_name)
 
         assert json_resp['permission'] == permission

@@ -63,7 +63,7 @@ class AdminOrgGroups(APIView):
         creator_name_set = set([g.creator_name for g in groups])
         for e in creator_name_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
 

@@ -318,7 +318,7 @@ class AdminAdminUsers(APIView):
             user_info = {}
             profile = Profile.objects.get_profile_by_user(user.email)
             user_info['email'] = user.email
-            user_info['name'] = email2nickname(user.email)
+            user_info['name'] = email2nickname(email2contact_email(user.email))
             user_info['contact_email'] = email2contact_email(user.email)
             user_info['login_id'] = profile.login_id if profile and profile.login_id else ''
 
@@ -402,7 +402,7 @@ class AdminUsers(APIView):
 
             info = {}
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
 
             profile = Profile.objects.get_profile_by_user(user.email)
@@ -529,7 +529,7 @@ class AdminUsers(APIView):
 
             info = {}
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
             info['login_id'] = profile.login_id if profile and profile.login_id else ''
 
@@ -928,7 +928,7 @@ class AdminSearchUser(APIView):
 
             info = {}
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
 
             info['is_staff'] = user.is_staff
@@ -1331,7 +1331,7 @@ class AdminUserGroups(APIView):
         creator_name_set = set([g.creator_name for g in groups])
         for e in creator_name_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
 
         for group in groups:
             isoformat_timestr = timestamp_to_isoformat_timestr(group.timestamp)

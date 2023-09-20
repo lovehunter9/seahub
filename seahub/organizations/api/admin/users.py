@@ -74,7 +74,7 @@ class OrgAdminUsers(APIView):
 
             info = {}
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
 
             info['is_staff'] = user.is_staff
@@ -289,7 +289,7 @@ class OrgAdminUsers(APIView):
         user_info['id'] = user.id
         user_info['is_active'] = user.is_active
         user_info['ctime'] = timestamp_to_isoformat_timestr(user.ctime)
-        user_info['name'] = email2nickname(user.email)
+        user_info['name'] = email2nickname(email2contact_email(user.email))
         user_info['email'] = user.email
         user_info['contact_email'] = email2contact_email(user.email)
         user_info['last_login'] = None
@@ -739,7 +739,7 @@ class OrgAdminImportUsers(APIView):
 
             info = {}
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
 
             info['is_staff'] = user.is_staff

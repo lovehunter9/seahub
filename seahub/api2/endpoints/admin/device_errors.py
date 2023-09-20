@@ -14,7 +14,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error
 from seahub.api2.models import TokenV2
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 from seahub.utils.timeutils import timestamp_to_isoformat_timestr
 from seahub.utils import is_pro_version
@@ -62,7 +62,7 @@ class AdminDeviceErrors(APIView):
         for error in device_errors:
             result = {}
             result['email'] = error.email if error.email else ''
-            result['name'] = email2nickname(error.email)
+            result['name'] = email2nickname(email2contact_email(error.email))
             result['device_ip'] = error.peer_ip if error.peer_ip else ''
             result['repo_name'] = error.repo_name if error.repo_name else ''
             result['repo_id'] = error.repo_id if error.repo_id else ''

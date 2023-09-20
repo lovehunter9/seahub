@@ -21,7 +21,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 from seahub.ocm_via_webdav.settings import ENABLE_OCM_VIA_WEBDAV, \
         OCM_VIA_WEBDAV_OCM_ENDPOINT, OCM_VIA_WEBDAV_OCM_PROVIDER_URI, \
@@ -239,7 +239,7 @@ class SharesView(APIView):
             share.save()
 
         result = {
-            "recipientDisplayName": email2nickname(share_with)
+            "recipientDisplayName": email2nickname(email2contact_email(share_with))
         }
         return Response(result, status=status.HTTP_201_CREATED)
 

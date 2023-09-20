@@ -18,7 +18,7 @@ from seahub.api2.utils import api_error
 from seaserv import seafile_api
 
 from seahub.utils.repo import get_available_repo_perms, get_repo_owner
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.constants import PERMISSION_READ, PERMISSION_READ_WRITE
 from seahub.ocm.models import OCMShareReceived, OCMShare
 from seahub.ocm.settings import ENABLE_OCM, SUPPORTED_OCM_PROTOCOLS, \
@@ -372,8 +372,8 @@ class OCMSharesPrepareView(APIView):
             'providerId': OCM_PROVIDER_ID,
             'owner': repo_owner,
             'sender': from_user,
-            'ownerDisplayName': email2nickname(repo_owner),
-            'senderDisplayName': email2nickname(from_user),
+            'ownerDisplayName': email2nickname(email2contact_email(repo_owner)),
+            'senderDisplayName': email2nickname(email2contact_email(from_user)),
             'shareType': consumer_protocol['resourceTypes']['shareTypes'][0],  # currently only support user type
             'resourceType': consumer_protocol['resourceTypes']['name'],  # currently only support repo
             'protocol': {

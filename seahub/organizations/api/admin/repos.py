@@ -200,7 +200,7 @@ class OrgAdminRepo(APIView):
 
         repo_info = {}
         repo_info['owner_email'] = new_owner
-        repo_info['owner_name'] = email2nickname(new_owner)
+        repo_info['owner_name'] = email2nickname(email2contact_email(new_owner))
         repo_info['encrypted'] = repo.encrypted
         repo_info['repo_id'] = repo.repo_id
         repo_info['repo_name'] = repo.name

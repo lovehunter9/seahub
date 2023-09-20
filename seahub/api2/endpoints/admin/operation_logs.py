@@ -24,7 +24,7 @@ def get_log_info(log_obj):
     isoformat_timestr = datetime_to_isoformat_timestr(log_obj.datetime)
     log_info = {
         "email": log_obj.email,
-        "name": email2nickname(log_obj.email),
+        "name": email2nickname(email2contact_email(log_obj.email)),
         "operation": log_obj.operation,
         "detail": json.loads(log_obj.detail),
         "datetime": isoformat_timestr,

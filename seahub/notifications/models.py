@@ -17,7 +17,7 @@ from django.template.loader import render_to_string
 from seaserv import seafile_api, ccnet_api
 
 from seahub.base.fields import LowerCaseCharField
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.invitations.models import Invitation
 from seahub.utils import normalize_cache_key
 from seahub.constants import HASH_URLS
@@ -506,7 +506,7 @@ class UserNotification(models.Model):
             logger.error(e)
             return _("Internal Server Error")
 
-        share_from = email2nickname(d['share_from'])
+        share_from = email2nickname(email2contact_email(d['share_from']))
         repo_id = d['repo_id']
         path = d.get('path', '/')
         org_id = d.get('org_id', None)
@@ -557,7 +557,7 @@ class UserNotification(models.Model):
             logger.error(e)
             return _("Internal Server Error")
 
-        share_from = email2nickname(d['share_from'])
+        share_from = email2nickname(email2contact_email(d['share_from']))
         repo_id = d['repo_id']
         group_id = d['group_id']
         path = d.get('path', '/')
@@ -653,7 +653,7 @@ class UserNotification(models.Model):
 
         msg = _("User <a href='%(user_profile)s'>%(group_staff)s</a> has added you to group <a href='%(href)s'>%(group_name)s</a>") % {
             'user_profile': reverse('user_profile', args=[group_staff]),
-            'group_staff': escape(email2nickname(group_staff)),
+            'group_staff': escape(email2nickname(email2contact_email(group_staff))),
             'href': reverse('group', args=[group_id]),
             'group_name': escape(group.group_name)}
         return msg
@@ -680,7 +680,7 @@ class UserNotification(models.Model):
         msg = _("File <a href='%(file_url)s'>%(file_name)s</a> has a new comment from user %(author)s") % {
             'file_url': reverse('view_lib_file', args=[repo_id, file_path]),
             'file_name': escape(file_name),
-            'author': escape(email2nickname(author)),
+            'author': escape(email2nickname(email2contact_email(author))),
         }
         return msg
 
@@ -697,7 +697,7 @@ class UserNotification(models.Model):
         msg = _("<a href='%(file_url)s'>Draft #%(draft_id)s</a> has a new comment from user %(author)s") % {
             'draft_id': draft_id,
             'file_url': reverse('drafts:draft', args=[draft_id]),
-            'author': escape(email2nickname(author)),
+            'author': escape(email2nickname(email2contact_email(author))),
         }
         return msg
 
@@ -714,7 +714,7 @@ class UserNotification(models.Model):
         msg = _("%(from_user)s has sent you a request for <a href='%(file_url)s'>draft #%(draft_id)s</a>") % {
             'draft_id': draft_id,
             'file_url': reverse('drafts:draft', args=[draft_id]),
-            'from_user': escape(email2nickname(from_user))
+            'from_user': escape(email2nickname(email2contact_email(from_user)))
         }
         return msg
 
@@ -754,7 +754,7 @@ class UserNotification(models.Model):
             logger.error(e)
             return _("Internal Server Error")
 
-        repo_owner_name = email2nickname(d['repo_owner'])
+        repo_owner_name = email2nickname(email2contact_email(d['repo_owner']))
         repo_id = d['repo_id']
         repo_name = d['repo_name']
         repo_url = reverse('lib_view', args=[repo_id, repo_name, ''])

@@ -81,7 +81,7 @@ class DirSharedItemsEndpoint(APIView):
                 "share_type": "user",
                 "user_info": {
                     "name": item.user,
-                    "nickname": email2nickname(item.user),
+                    "nickname": email2nickname(email2contact_email(item.user)),
                     "contact_email": email2contact_email(item.user),
                     "avatar_url": avatar_url,
                 },
@@ -343,7 +343,7 @@ class DirSharedItemsEndpoint(APIView):
                 if self.has_shared_to_user(request, repo_id, path, to_user):
                     result['failed'].append({
                         'email': to_user,
-                        'error_msg': _('This item has been shared to %s.') % email2nickname(to_user)
+                        'error_msg': _('This item has been shared to %s.') % email2nickname(email2contact_email(to_user))
                         })
                     continue
 
@@ -393,7 +393,7 @@ class DirSharedItemsEndpoint(APIView):
                         "share_type": "user",
                         "user_info": {
                             "name": to_user,
-                            "nickname": email2nickname(to_user),
+                            "nickname": email2nickname(email2contact_email(to_user)),
                             "contact_email": email2contact_email(to_user),
                             "avatar_url": avatar_url,
                         },

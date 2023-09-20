@@ -60,7 +60,7 @@ class AdminLogsLoginLogs(APIView):
         user_email_set = set([log.username for log in logs])
         for e in user_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
 
@@ -152,7 +152,7 @@ class AdminLogsFileAccessLogs(APIView):
 
         for e in user_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
         for e in repo_id_set:
@@ -244,7 +244,7 @@ class AdminLogsFileUpdateLogs(APIView):
 
         for e in user_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
         for e in repo_id_set:
@@ -345,13 +345,13 @@ class AdminLogsSharePermissionLogs(APIView):
 
         for e in from_user_email_set:
             if e not in from_nickname_dict:
-                from_nickname_dict[e] = email2nickname(e)
+                from_nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in from_contact_email_dict:
                 from_contact_email_dict[e] = email2contact_email(e)
 
         for e in to_user_email_set:
             if e not in to_nickname_dict:
-                to_nickname_dict[e] = email2nickname(e)
+                to_nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in to_contact_email_dict:
                 to_contact_email_dict[e] = email2contact_email(e)
 

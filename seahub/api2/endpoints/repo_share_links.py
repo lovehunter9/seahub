@@ -50,7 +50,7 @@ def get_share_link_info(fileshare):
 
     creator_email = fileshare.username
     data['creator_email'] = creator_email
-    data['creator_name'] = email2nickname(creator_email)
+    data['creator_name'] = email2nickname(email2contact_email(creator_email))
     data['creator_contact_email'] = email2contact_email(creator_email)
 
     data['path'] = path

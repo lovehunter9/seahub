@@ -9,7 +9,7 @@ from django.utils.encoding import force_bytes
 
 from seaserv import seafile_api
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import get_file_type_and_ext, gen_file_get_url, \
         get_site_scheme_and_netloc
 
@@ -188,7 +188,7 @@ def get_onlyoffice_dict(request, username, repo_id, file_path, file_id='',
         if request.user.is_authenticated:
             user_dict = {
                 "id": username,
-                "name": email2nickname(username)
+                "name": email2nickname(email2contact_email(username))
             }
             config['editorConfig']['user'] = user_dict
         else:

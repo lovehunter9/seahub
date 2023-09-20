@@ -63,7 +63,7 @@ class SharedFolders(APIView):
             result['share_permission'] = repo.permission
 
             if repo.share_type == 'personal':
-                result['user_name'] = email2nickname(repo.user)
+                result['user_name'] = email2nickname(email2contact_email(repo.user))
                 result['user_email'] = repo.user
                 result['contact_email'] = Profile.objects.get_contact_email_by_user(repo.user)
 

@@ -484,7 +484,7 @@ class User(object):
     def name(self):
         if not hasattr(self, '_cached_nickname'):
             # convert raw string to unicode obj
-            self._cached_nickname = smart_str(email2nickname(self.username))
+            self._cached_nickname = smart_str(email2nickname(email2contact_email(self.username)))
 
         return self._cached_nickname
 

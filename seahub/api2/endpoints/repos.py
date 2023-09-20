@@ -96,7 +96,7 @@ class ReposView(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             owned_repo_ids = [item.repo_id for item in owned_repos]
             try:
@@ -157,7 +157,7 @@ class ReposView(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             shared_repo_ids = [item.repo_id for item in shared_repos]
             try:
@@ -226,7 +226,7 @@ class ReposView(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             group_repo_ids = [item.repo_id for item in group_repos]
             try:
@@ -279,7 +279,7 @@ class ReposView(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             for r in public_repos:
                 repo_owner = repo_id_owner_dict[r.repo_id]
@@ -359,7 +359,7 @@ class RepoView(APIView):
             "repo_name": repo.name,
 
             "owner_email": repo_owner,
-            "owner_name": email2nickname(repo_owner),
+            "owner_name": email2nickname(email2contact_email(repo_owner)),
             "owner_contact_email": email2contact_email(repo_owner),
 
             "size": repo.size,

@@ -14,7 +14,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils.timeutils import datetime_to_isoformat_timestr
 from seahub.utils import is_pro_version
 
@@ -52,7 +52,7 @@ class PermAudit(APIView):
                     'permission': ev.permission,
                     'time': datetime_to_isoformat_timestr(ev.timestamp),
                     'file_path': ev.file_path,
-                    'from_name': email2nickname(ev.from_user),
+                    'from_name': email2nickname(email2contact_email(ev.from_user)),
                     'from_email': ev.from_user,
                     'to': ev.to
                 })

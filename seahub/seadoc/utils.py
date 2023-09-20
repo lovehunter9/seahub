@@ -13,7 +13,7 @@ from seahub.settings import SEADOC_PRIVATE_KEY
 from seahub.utils import normalize_file_path, gen_inner_file_get_url, gen_inner_file_upload_url, \
     gen_file_get_url, gen_file_upload_url
 from seahub.views import check_folder_permission
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.avatar.templatetags.avatar_tags import api_avatar_url
 
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ def uuid_str_to_36_chars(file_uuid):
 
 
 def gen_seadoc_access_token(file_uuid, filename, username, permission='rw'):
-    name = email2nickname(username)
+    name = email2nickname(email2contact_email(username))
     url, is_default, date_uploaded = api_avatar_url(username, 72)
     access_token = jwt.encode({
         'file_uuid': file_uuid,

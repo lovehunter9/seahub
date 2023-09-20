@@ -19,7 +19,7 @@ from seahub.api2.endpoints.utils import check_time_period_valid, \
         generate_links_header_for_paginator, get_user_name_dict, \
         get_user_contact_email_dict
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils.timeutils import datetime_to_isoformat_timestr
 
 logger = logging.getLogger(__name__)
@@ -54,7 +54,7 @@ class LoginLogs(APIView):
             result.append({
                 'login_time': datetime_to_isoformat_timestr(log.login_date),
                 'login_ip': log.login_ip,
-                'name': email2nickname(log.username),
+                'name': email2nickname(email2contact_email(log.username)),
                 'email':log.username
             })
 

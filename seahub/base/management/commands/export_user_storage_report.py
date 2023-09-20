@@ -45,7 +45,7 @@ class Command(BaseCommand):
         for user in all_users:
 
             user_email = user.email
-            user_name = email2nickname(user_email)
+            user_name = email2nickname(email2contact_email(user_email))
             user_contact_email = email2contact_email(user_email)
 
             _populate_user_quota_usage(user)

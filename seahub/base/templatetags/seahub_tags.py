@@ -389,8 +389,11 @@ def email2contact_email(value):
         return contact_email
 
     contact_email = Profile.objects.get_contact_email_by_user(value)
-    cache.set(key, contact_email, CONTACT_CACHE_TIMEOUT) 
-    return contact_email
+    if contact_email and contact_email.strip():
+        cache.set(key, contact_email, CONTACT_CACHE_TIMEOUT)
+        return contact_email
+
+    return value
 
 @register.filter(name='email2id')
 def email2id(value):

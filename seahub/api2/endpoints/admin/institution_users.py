@@ -35,7 +35,7 @@ def get_institution_user_info(user_obj, institution, is_check_admin=True):
     """
     info = {}
     info['email'] = user_obj.email
-    info['name'] = email2nickname(user_obj.email)
+    info['name'] = email2nickname(email2contact_email(user_obj.email))
     info['contact_email'] = email2contact_email(user_obj.email)
 
     info['quota_usage'], info['quota_total'] = get_user_quota_usage_and_total(user_obj.email)

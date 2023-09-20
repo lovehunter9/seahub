@@ -61,7 +61,7 @@ class RepoSendNewPassword(APIView):
         repo_owner = get_repo_owner(request, repo_id)
 
         if '@seafile_group' in repo_owner:
-            group_id = email2nickname(repo_owner)
+            group_id = email2nickname(email2contact_email(repo_owner))
             if not ccnet_api.check_group_staff(int(group_id), username):
                 error_msg = 'Permission denied.'
                 return api_error(status.HTTP_403_FORBIDDEN, error_msg)

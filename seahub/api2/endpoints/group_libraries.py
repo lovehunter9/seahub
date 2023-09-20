@@ -243,12 +243,12 @@ class GroupLibraries(APIView):
         group_repo_info = get_group_repo_info(request, group_repo)
 
         group_repo_info['owner_email'] = username
-        group_repo_info['owner_name'] = email2nickname(username)
+        group_repo_info['owner_name'] = email2nickname(email2contact_email(username))
         group_repo_info['owner_contact_email'] = email2contact_email(username)
 
         modifier = group_repo.last_modifier
         group_repo_info['modifier_email'] = modifier
-        group_repo_info['modifier_name'] = email2nickname(modifier)
+        group_repo_info['modifier_name'] = email2nickname(email2contact_email(modifier))
         group_repo_info['modifier_contact_email'] = email2contact_email(modifier)
 
         return Response(group_repo_info)

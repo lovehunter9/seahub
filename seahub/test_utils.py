@@ -330,7 +330,7 @@ class Fixtures(Exam):
         user_info['org_id'] = org.org_id
         user_info['active'] = user.is_active
         user_info['email'] = user.email
-        user_info['name'] = email2nickname(user.email)
+        user_info['name'] = email2nickname(email2contact_email(user.email))
         user_info['contact_email'] = email2contact_email(user.email)
 
         org_user_quota = seafile_api.get_org_user_quota(org.org_id, user.email)

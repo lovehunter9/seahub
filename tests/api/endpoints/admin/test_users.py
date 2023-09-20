@@ -261,7 +261,7 @@ class AdminUserTest(BaseTestCase):
         self.assertEqual(200, resp.status_code)
         assert json_resp['name'] == tmp_name
 
-        assert email2nickname(self.tmp_email) == tmp_name
+        assert email2nickname(email2contact_email(self.tmp_email)) == tmp_name
 
     def test_update_contact_email(self):
 

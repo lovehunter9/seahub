@@ -63,7 +63,7 @@ class ActivitiesView(APIView):
             d['path'] = e.path
             d['name'] = '' if e.path == '/' else os.path.basename(e.path)
             d['author_email'] = e.op_user
-            d['author_name'] = email2nickname(e.op_user)
+            d['author_name'] = email2nickname(email2contact_email(e.op_user))
             d['author_contact_email'] = email2contact_email(e.op_user)
 
             try:

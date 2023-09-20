@@ -57,7 +57,7 @@ class OrgAdminLinks(APIView):
         for l in publinks:
             link = {}
             link['id'] = l.id
-            link['owner_name'] = email2nickname(l.username)
+            link['owner_name'] = email2nickname(email2contact_email(l.username))
             link['owner_email'] = l.username
             link['owner_contact_email'] = email2contact_email(l.username)
             link['created_time'] = datetime_to_isoformat_timestr(l.ctime)

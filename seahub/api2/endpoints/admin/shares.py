@@ -105,7 +105,7 @@ class AdminShares(APIView):
             for share_item in share_items:
 
                 user_email = share_item.user
-                user_name = email2nickname(user_email) if user_email else '--'
+                user_name = email2nickname(email2contact_email(user_email)) if user_email else '--'
 
                 share_info = {}
                 share_info['repo_id'] = repo.repo_id

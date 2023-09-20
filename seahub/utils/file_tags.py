@@ -63,7 +63,7 @@ def get_tagged_files(repo, repo_tag_id):
         tagged_file["last_modified"] = timestamp_to_isoformat_timestr(file_obj.mtime)
         tagged_file["modifier_email"] = file_obj.modifier
         tagged_file["modifier_contact_email"] = email2contact_email(file_obj.modifier)
-        tagged_file["modifier_name"] = email2nickname(file_obj.modifier)
+        tagged_file["modifier_name"] = email2nickname(email2contact_email(file_obj.modifier))
         tagged_files["tagged_files"].append(tagged_file)
 
     return tagged_files

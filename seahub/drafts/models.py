@@ -43,7 +43,7 @@ class DraftManager(models.Manager):
         for d in qs:
             draft = {}
             draft['id'] = d.id
-            draft['owner_nickname'] = email2nickname(d.username)
+            draft['owner_nickname'] = email2nickname(email2contact_email(d.username))
             draft['origin_repo_id'] = d.origin_repo_id
             draft['draft_file_path'] = d.draft_file_path
             draft['created_at'] = datetime_to_isoformat_timestr(d.created_at)
@@ -85,7 +85,7 @@ class DraftManager(models.Manager):
             draft['id'] = d.id
             draft['owner'] = d.username
             draft['repo_name'] = repo.name
-            draft['owner_nickname'] = email2nickname(d.username)
+            draft['owner_nickname'] = email2nickname(email2contact_email(d.username))
             draft['origin_repo_id'] = d.origin_repo_id
             draft['origin_file_path'] = file_path
             draft['origin_file_version'] = d.origin_file_version
@@ -208,7 +208,7 @@ class Draft(TimestampedModel):
         return {
             'id': self.pk,
             'owner': self.username,
-            'owner_nickname': email2nickname(self.username),
+            'owner_nickname': email2nickname(email2contact_email(self.username)),
             'origin_repo_id': self.origin_repo_id,
             'origin_file_path': file_path,
             'origin_file_version': self.origin_file_version,
@@ -237,7 +237,7 @@ class DraftReviewer(models.Model):
 
     def to_dict(self):
         return {
-            'name': email2nickname(self.reviewer),
+            'name': email2nickname(email2contact_email(self.reviewer)),
             'email': self.reviewer,
             'contact_email': email2contact_email(self.reviewer)
         }

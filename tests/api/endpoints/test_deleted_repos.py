@@ -23,7 +23,7 @@ class DeletedReposTest(BaseTestCase):
         json_trashs = [trash for trash in json_trashs if trash['repo_id'] == repo.id]
         assert json_trashs[0]['repo_id'] == repo.id
         assert json_trashs[0]['owner_email'] == name
-        assert json_trashs[0]['owner_name'] == email2nickname(name)
+        assert json_trashs[0]['owner_name'] == email2nickname(email2contact_email(name))
         assert json_trashs[0]['owner_contact_email'] == email2contact_email(name)
         assert json_trashs[0]['repo_name'] == repo.name
         #assert json_trashs[0]['org_id'] == repo.org_id

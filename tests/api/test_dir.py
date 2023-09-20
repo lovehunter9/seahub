@@ -59,7 +59,7 @@ class DirTest(BaseTestCase):
         assert json_resp[1]['type'] == 'file'
         assert json_resp[1]['modifier_email'] == self.user.username
         assert json_resp[1]['modifier_name'] == \
-                email2nickname(self.user.username)
+                email2nickname(email2contact_email(self.user.username))
         assert json_resp[1]['modifier_contact_email'] == \
                 email2contact_email(self.user.username)
 

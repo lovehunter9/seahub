@@ -15,7 +15,7 @@ from seahub.constants import (
 from seahub.utils import EMPTY_SHA1, is_org_context, is_pro_version
 from seahub.api2.utils import to_python_boolean
 from seahub.base.models import RepoSecretKey
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.share.models import CustomSharePermissions
 
 from seahub.settings import ENABLE_STORAGE_CLASSES, STORAGE_CLASS_MAPPING_POLICY
@@ -343,7 +343,7 @@ def is_group_repo_staff(request, repo_id, username):
     repo_owner = get_repo_owner(request, repo_id)
 
     if '@seafile_group' in repo_owner:
-        group_id = email2nickname(repo_owner)
+        group_id = email2nickname(email2contact_email(repo_owner))
         is_staff = seaserv.check_group_staff(group_id, username)
 
     return is_staff

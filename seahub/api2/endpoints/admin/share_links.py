@@ -63,7 +63,7 @@ def get_share_link_info(fileshare):
 
     ccnet_email = fileshare.username
     data['creator_email'] = ccnet_email
-    data['creator_name'] = email2nickname(ccnet_email)
+    data['creator_name'] = email2nickname(email2contact_email(ccnet_email))
     data['creator_contact_email'] = email2contact_email(ccnet_email)
 
     data['repo_id'] = repo_id
@@ -147,7 +147,7 @@ class AdminShareLinks(APIView):
         owner_email_set = set([link.username for link in share_links])
         for e in owner_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
 
         share_links_info = []
         for link in share_links:

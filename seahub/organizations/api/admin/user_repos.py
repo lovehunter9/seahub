@@ -118,7 +118,7 @@ class OrgAdminUserBesharedRepos(APIView):
                 group_name = group_id_to_name(group_id)
 
             owner_name = group_name if is_group_owned_repo else \
-                email2nickname(owner_email)
+                email2nickname(email2contact_email(owner_email))
             owner_contact_email = '' if is_group_owned_repo else \
                 email2contact_email(owner_email)
 

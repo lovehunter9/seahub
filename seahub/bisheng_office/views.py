@@ -19,7 +19,7 @@ from seahub.api2.utils import api_error
 from seahub.api2.throttling import UserRateThrottle
 
 from seahub.base.accounts import User
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import gen_file_get_url, gen_inner_file_upload_url, \
         get_file_type_and_ext, normalize_file_path
 from seahub.avatar.templatetags.avatar_tags import api_avatar_url
@@ -121,7 +121,7 @@ class BishengOfficeView(APIView):
             'user': {
                 'uid': username,
                 'oid': username,
-                'nickName': email2nickname(username),
+                'nickName': email2nickname(email2contact_email(username)),
                 'avatar': url,
                 'privilege': privilege
             },

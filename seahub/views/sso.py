@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from urllib.parse import quote
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 from seahub.auth import REDIRECT_FIELD_NAME
 from seahub.utils import render_error
@@ -80,7 +80,7 @@ def jwt_sso(request):
     data = {
         'exp': time.time() + JWT_SSO_EXPIRATION,
         'email': username,
-        'name': email2nickname(username)
+        'name': email2nickname(email2contact_email(username))
     }
 
     jwt_token = jwt.encode(data, JWT_SSO_SECRET_KEY, JWT_SSO_ALGORITHM)

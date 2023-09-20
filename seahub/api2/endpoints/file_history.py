@@ -32,7 +32,7 @@ def get_new_file_history_info(ent, avatar_size):
 
     info['creator_avatar_url'] = url
     info['creator_email'] = creator_name
-    info['creator_name'] = email2nickname(creator_name)
+    info['creator_name'] = email2nickname(email2contact_email(creator_name))
     info['creator_contact_email'] = email2contact_email(creator_name)
     info['op_type'] = ent.op_type
     info['ctime'] = utc_datetime_to_isoformat_timestr(ent.timestamp)
@@ -55,7 +55,7 @@ def get_file_history_info(commit, avatar_size):
 
     info['creator_avatar_url'] = url
     info['creator_email'] = creator_name
-    info['creator_name'] = email2nickname(creator_name)
+    info['creator_name'] = email2nickname(email2contact_email(creator_name))
     info['creator_contact_email'] = email2contact_email(creator_name)
     info['ctime'] = timestamp_to_isoformat_timestr(commit.ctime)
     info['description'] = commit.desc

@@ -738,7 +738,7 @@ class Repos(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             owned_repos.sort(key=lambda x: x.last_modify, reverse=True)
             for r in owned_repos:
@@ -798,7 +798,7 @@ class Repos(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             shared_repos.sort(key=lambda x: x.last_modify, reverse=True)
             for r in shared_repos:
@@ -864,7 +864,7 @@ class Repos(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             for r in group_repos:
                 if q and q.lower() not in r.name.lower():
@@ -909,7 +909,7 @@ class Repos(APIView):
                 if e not in contact_email_dict:
                     contact_email_dict[e] = email2contact_email(e)
                 if e not in nickname_dict:
-                    nickname_dict[e] = email2nickname(e)
+                    nickname_dict[e] = email2nickname(email2contact_email(e))
 
             for r in public_repos:
                 if q and q.lower() not in r.name.lower():
@@ -1136,8 +1136,8 @@ class PubRepos(APIView):
                 "id": r.repo_id,
                 "name": r.repo_name,
                 "owner": r.user,
-                "owner_nickname": email2nickname(r.user),
-                "owner_name": email2nickname(r.user),
+                "owner_nickname": email2nickname(email2contact_email(r.user)),
+                "owner_name": email2nickname(email2contact_email(r.user)),
                 "mtime": r.last_modified,
                 "mtime_relative": translate_seahub_time(r.last_modified),
                 "size": r.size,
@@ -1238,8 +1238,8 @@ class PubRepos(APIView):
             "encrypted": repo.encrypted,
             "permission": 'rw',  # Always have read-write permission to owned repo
             "owner": username,
-            "owner_nickname": email2nickname(username),
-            "owner_name": email2nickname(username),
+            "owner_nickname": email2nickname(email2contact_email(username)),
+            "owner_name": email2nickname(email2contact_email(username)),
         }
 
         return Response(pub_repo, status=201)
@@ -1323,7 +1323,7 @@ class Repo(APIView):
             "permission": check_permission(repo.id, username),
             "modifier_email": repo.last_modifier,
             "modifier_contact_email": email2contact_email(repo.last_modifier),
-            "modifier_name": email2nickname(repo.last_modifier),
+            "modifier_name": email2nickname(email2contact_email(repo.last_modifier)),
             "file_count": repo.file_count,
             }
         if repo.encrypted:
@@ -2070,7 +2070,7 @@ def get_dir_file_recursively(username, repo_id, path, all_dirs):
                 entry["is_locked"] = dirent.is_locked
                 entry["lock_owner"] = dirent.lock_owner
                 if dirent.lock_owner:
-                    entry["lock_owner_name"] = email2nickname(dirent.lock_owner)
+                    entry["lock_owner_name"] = email2nickname(email2contact_email(dirent.lock_owner))
                 entry["lock_time"] = dirent.lock_time
                 if username == dirent.lock_owner:
                     entry["locked_by_me"] = True
@@ -2094,7 +2094,7 @@ def get_dir_file_recursively(username, repo_id, path, all_dirs):
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
 
         for e in file_list:
             e['modifier_contact_email'] = contact_email_dict.get(e['modifier_email'], '')
@@ -2141,7 +2141,7 @@ def get_dir_entrys_by_id(request, repo, path, dir_id, request_type=None):
                 entry["is_locked"] = dirent.is_locked
                 entry["lock_owner"] = dirent.lock_owner
                 if dirent.lock_owner:
-                    entry["lock_owner_name"] = email2nickname(dirent.lock_owner)
+                    entry["lock_owner_name"] = email2nickname(email2contact_email(dirent.lock_owner))
                 entry["lock_time"] = dirent.lock_time
                 if username == dirent.lock_owner:
                     entry["locked_by_me"] = True
@@ -2166,7 +2166,7 @@ def get_dir_entrys_by_id(request, repo, path, dir_id, request_type=None):
         if e not in contact_email_dict:
             contact_email_dict[e] = email2contact_email(e)
         if e not in nickname_dict:
-            nickname_dict[e] = email2nickname(e)
+            nickname_dict[e] = email2nickname(email2contact_email(e))
 
     starred_files = get_dir_starred_files(username, repo.id, path)
     files_tags_in_dir = get_files_tags_in_dir(repo.id, path)
@@ -3254,7 +3254,7 @@ class FileDetailView(APIView):
         entry["mtime"] = last_modified
         entry["last_modified"] = timestamp_to_isoformat_timestr(last_modified)
         entry["last_modifier_email"] = latest_contributor
-        entry["last_modifier_name"] = email2nickname(latest_contributor)
+        entry["last_modifier_name"] = email2nickname(email2contact_email(latest_contributor))
         entry["last_modifier_contact_email"] = email2contact_email(latest_contributor)
 
         try:
@@ -3381,7 +3381,7 @@ class FileHistory(APIView):
 
             user_info = {}
             user_info['email'] = creator_name
-            user_info['name'] = email2nickname(creator_name)
+            user_info['name'] = email2nickname(email2contact_email(creator_name))
             user_info['contact_email'] = Profile.objects.get_contact_email_by_user(creator_name)
 
             commit._dict['user_info'] = user_info
@@ -4528,8 +4528,8 @@ class EventsView(APIView):
 
             size = request.GET.get('size', 36)
             url, is_default, date_uploaded = api_avatar_url(d['author'], size)
-            d['nick'] = email2nickname(d['author'])
-            d['name'] = email2nickname(d['author'])
+            d['nick'] = email2nickname(email2contact_email(d['author']))
+            d['name'] = email2nickname(email2contact_email(d['author']))
             d['avatar'] = avatar(d['author'], size)
             d['avatar_url'] = url
             d['time_relative'] = translate_seahub_time(utc_to_local(e.timestamp))
@@ -4842,12 +4842,12 @@ class GroupRepos(APIView):
             "encrypted": repo.encrypted,
             "permission": permission,
             "owner": username,
-            "owner_nickname": email2nickname(username),
-            "owner_name": email2nickname(username),
+            "owner_nickname": email2nickname(email2contact_email(username)),
+            "owner_name": email2nickname(email2contact_email(username)),
             "share_from_me": True,
             "modifier_email": repo.last_modifier,
             "modifier_contact_email": email2contact_email(repo.last_modifier),
-            "modifier_name": email2nickname(repo.last_modifier),
+            "modifier_name": email2nickname(email2contact_email(repo.last_modifier)),
         }
 
         return Response(group_repo, status=200)
@@ -4878,7 +4878,7 @@ class GroupRepos(APIView):
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
 
         # Get repos that is admin permission in group.
         admin_repos = ExtraGroupsSharePermission.objects.\
@@ -5244,7 +5244,7 @@ class OrganizationView(APIView):
 
             creator = org.creator
             org_info['creator_email'] = creator
-            org_info['creator_name'] = email2nickname(creator)
+            org_info['creator_name'] = email2nickname(email2contact_email(creator))
             org_info['creator_contact_email'] = email2contact_email(creator)
 
             return Response(org_info, status=status.HTTP_201_CREATED)
@@ -5298,7 +5298,7 @@ class RepoDownloadSharedLinks(APIView):
                     continue
 
             shared_link['create_by'] = fs.username
-            shared_link['creator_name'] = email2nickname(fs.username)
+            shared_link['creator_name'] = email2nickname(email2contact_email(fs.username))
             shared_link['create_time'] = datetime_to_isoformat_timestr(fs.ctime)
             shared_link['token'] = fs.token
             shared_link['path'] = path
@@ -5382,7 +5382,7 @@ class RepoUploadSharedLinks(APIView):
                 continue
 
             shared_link['create_by'] = fs.username
-            shared_link['creator_name'] = email2nickname(fs.username)
+            shared_link['creator_name'] = email2nickname(email2contact_email(fs.username))
             shared_link['create_time'] = datetime_to_isoformat_timestr(fs.ctime)
             shared_link['token'] = fs.token
             shared_link['path'] = path

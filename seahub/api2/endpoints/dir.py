@@ -88,7 +88,7 @@ def get_dir_file_info_list(username, request_type, repo_obj, parent_dir,
         lock_owner_set = {x.lock_owner for x in file_list}
         for e in modifier_set | lock_owner_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
 

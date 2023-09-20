@@ -51,7 +51,7 @@ def get_org_info(org):
 
     creator = org.creator
     org_info['creator_email'] = creator
-    org_info['creator_name'] = email2nickname(creator)
+    org_info['creator_name'] = email2nickname(email2contact_email(creator))
     org_info['creator_contact_email'] = email2contact_email(creator)
 
     org_info['quota'] = seafile_api.get_org_quota(org_id)

@@ -14,7 +14,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error, user_to_dict
 
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.base.accounts import User
 from seahub.tags.models import FileUUIDMap
 from seahub.views import check_folder_permission
@@ -111,7 +111,7 @@ class DraftReviewerView(APIView):
             result['success'].append({
                 "user_info": {
                     "name": reviewer,
-                    "nickname": email2nickname(reviewer)
+                    "nickname": email2nickname(email2contact_email(reviewer))
                 }
             })
 

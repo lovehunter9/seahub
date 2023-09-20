@@ -25,7 +25,7 @@ from seahub.invitations.settings import INVITATIONS_TOKEN_AGE
 from seahub.constants import PERMISSION_READ, PERMISSION_READ_WRITE, GUEST_USER
 from seahub.share.utils import is_repo_admin
 from seahub.utils import is_org_context
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 json_content_type = 'application/json; charset=utf-8'
 logger = logging.getLogger(__name__)
@@ -76,7 +76,7 @@ class RepoShareInvitationsView(APIView):
         for obj in shared_queryset:
             data = obj.invitation.to_dict()
             data['permission'] = obj.permission
-            data['inviter_name'] = email2nickname(obj.invitation.inviter)
+            data['inviter_name'] = email2nickname(email2contact_email(obj.invitation.inviter))
 
             shared_list.append(data)
 
@@ -131,7 +131,7 @@ class RepoShareInvitationsBatchView(APIView):
         result = {}
         result['failed'] = []
         result['success'] = []
-        inviter_name = email2nickname(request.user.username)
+        inviter_name = email2nickname(email2contact_email(request.user.username))
 
         try:
             invitation_queryset = Invitation.objects.order_by('-invite_time').filter(

@@ -15,7 +15,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error
 from seahub.api2.endpoints.group_owned_libraries import get_group_id_by_repo_owner
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ def get_group_repo_info(repo):
         group_name = group_id_to_name(group_id)
         result['shared_by_name'] = group_name
     else:
-        result['shared_by_name'] = email2nickname(repo.user)
+        result['shared_by_name'] = email2nickname(email2contact_email(repo.user))
 
     result['permission'] = repo.permission
     result['group_id'] = repo.group_id

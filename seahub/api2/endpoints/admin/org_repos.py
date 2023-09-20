@@ -62,7 +62,7 @@ class AdminOrgRepos(APIView):
         contact_email_dict = {}
         for e in owner_email_set:
             if e not in nickname_dict:
-                nickname_dict[e] = email2nickname(e)
+                nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in contact_email_dict:
                 contact_email_dict[e] = email2contact_email(e)
 

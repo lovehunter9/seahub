@@ -18,7 +18,7 @@ from seahub.utils import send_html_email, get_site_scheme_and_netloc
 from seahub.avatar.templatetags.avatar_tags import avatar
 from seahub.avatar.util import get_default_avatar_url
 from seahub.base.accounts import User
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.invitations.models import Invitation
 from seahub.profile.models import Profile
 from seahub.constants import HASH_URLS
@@ -89,7 +89,7 @@ class Command(BaseCommand):
 
         repo_url = reverse('lib_view', args=[repo.id, repo.name, ''])
         notice.repo_url = repo_url
-        notice.notice_from = escape(email2nickname(d['share_from']))
+        notice.notice_from = escape(email2nickname(email2contact_email(d['share_from'])))
         notice.repo_name = repo.name
         notice.avatar_src = self.get_avatar_src(d['share_from'])
         notice.shared_type = shared_type
@@ -120,7 +120,7 @@ class Command(BaseCommand):
 
         repo_url = reverse('lib_view', args=[repo.id, repo.name, ''])
         notice.repo_url = repo_url
-        notice.notice_from = escape(email2nickname(d['share_from']))
+        notice.notice_from = escape(email2nickname(email2contact_email(d['share_from'])))
         notice.repo_name = repo.name
         notice.avatar_src = self.get_avatar_src(d['share_from'])
         notice.group_url = reverse('group', args=[group.id])
@@ -160,7 +160,7 @@ class Command(BaseCommand):
         notice.grpjoin_user_profile_url = reverse('user_profile',
                                                   args=[username])
         notice.grpjoin_group_url = HASH_URLS['GROUP_MEMBERS'] % {'group_id': group_id}
-        notice.notice_from = escape(email2nickname(username))
+        notice.notice_from = escape(email2nickname(email2contact_email(username)))
         notice.grpjoin_group_name = group.group_name
         notice.grpjoin_request_msg = join_request_msg
         notice.avatar_src = self.get_avatar_src(username)
@@ -173,7 +173,7 @@ class Command(BaseCommand):
 
         group = ccnet_api.get_group(group_id)
 
-        notice.notice_from = escape(email2nickname(group_staff))
+        notice.notice_from = escape(email2nickname(email2contact_email(group_staff)))
         notice.avatar_src = self.get_avatar_src(group_staff)
         notice.group_staff_profile_url = reverse('user_profile',
                                                  args=[group_staff])
@@ -340,7 +340,7 @@ class Command(BaseCommand):
 
             if not notices:
                 continue
-            user_name = email2nickname(to_user)
+            user_name = email2nickname(email2contact_email(to_user))
             contact_email = Profile.objects.get_contact_email_by_user(to_user)
             c = {
                 'to_user': contact_email,

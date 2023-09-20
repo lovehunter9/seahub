@@ -172,7 +172,7 @@ class WikiPageContentView(APIView):
 
         return Response({
             "content": content,
-            "latest_contributor": email2nickname(latest_contributor),
+            "latest_contributor": email2nickname(email2contact_email(latest_contributor)),
             "last_modified": last_modified,
             "permission": permission,
             })

@@ -63,7 +63,7 @@ def get_repo_info(repo):
         result['group_name'] = group_id_to_name(group_id)
         result['owner_name'] = group_id_to_name(group_id)
     else:
-        result['owner_name'] = email2nickname(owner)
+        result['owner_name'] = email2nickname(email2contact_email(owner))
 
     return result
 
@@ -529,7 +529,7 @@ class AdminSearchLibrary(APIView):
                     group_id = get_group_id_by_repo_owner(owner_email)
                     owner_name = group_id_to_name(group_id)
                 else:
-                    owner_name = email2nickname(owner_email)
+                    owner_name = email2nickname(email2contact_email(owner_email))
 
                 name_dict[repo_id] = owner_name
 

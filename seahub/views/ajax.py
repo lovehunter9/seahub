@@ -54,7 +54,7 @@ from seahub.base.accounts import User
 from seahub.thumbnail.utils import get_thumbnail_src
 from seahub.share.utils import is_repo_admin
 from seahub.base.templatetags.seahub_tags import translate_seahub_time, \
-    email2nickname, tsstr_sec
+    email2nickname, email2contact_email, tsstr_sec
 from seahub.constants import PERMISSION_READ_WRITE
 from seahub.constants import HASH_URLS
 
@@ -277,7 +277,7 @@ def list_lib_dir(request, repo_id):
         if is_pro_version():
             f_['is_locked'] = True if f.is_locked else False
             f_['lock_owner'] = f.lock_owner
-            f_['lock_owner_name'] = email2nickname(f.lock_owner)
+            f_['lock_owner_name'] = email2nickname(email2contact_email(f.lock_owner))
 
             f_['locked_by_me'] = False
             if f.lock_owner == username:

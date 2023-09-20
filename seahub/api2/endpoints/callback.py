@@ -24,7 +24,7 @@ def list_all_users():
 
         info = {}
         info['email'] = user.email
-        info['name'] = email2nickname(user.email)
+        info['name'] = email2nickname(email2contact_email(user.email))
         info['contact_email'] = email2contact_email(user.email)
         info['login_id'] = profile.login_id if profile and profile.login_id else ''
 

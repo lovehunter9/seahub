@@ -1,4 +1,4 @@
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.profile.models import Profile
 from seahub.test_utils import BaseTestCase
 
@@ -16,14 +16,14 @@ class UpdateNicknameCacheTest(BaseTestCase):
 
     def test_update_when_call_object_method(self):
         username = self.tmp_user.username
-        assert email2nickname(username) == username.split('@')[0]
+        assert email2nickname(email2contact_email(username)) == username.split('@')[0]
 
         Profile.objects.add_or_update(username, 'nickname')
-        assert email2nickname(username) == 'nickname'
+        assert email2nickname(email2contact_email(username)) == 'nickname'
 
     def test_updated_when_call_save(self):
         username = self.tmp_user.username
-        assert email2nickname(username) == username.split('@')[0]
+        assert email2nickname(email2contact_email(username)) == username.split('@')[0]
 
         p = Profile.objects.get_profile_by_user(username)
         if p is None:
@@ -32,4 +32,4 @@ class UpdateNicknameCacheTest(BaseTestCase):
         p.nickname = 'nickname'
         p.save()
 
-        assert email2nickname(username) == 'nickname'
+        assert email2nickname(email2contact_email(username)) == 'nickname'

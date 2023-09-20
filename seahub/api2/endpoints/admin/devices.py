@@ -17,7 +17,7 @@ from seahub.api2.authentication import TokenAuthentication
 from seahub.api2.throttling import UserRateThrottle
 from seahub.api2.utils import api_error
 from seahub.api2.models import TokenV2, DESKTOP_PLATFORMS
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ class AdminDevices(APIView):
             result['last_accessed'] = datetime_to_isoformat_timestr(device.last_accessed)
             result['last_login_ip'] = device.last_login_ip
             result['user'] = device.user
-            result['user_name'] = email2nickname(device.user)
+            result['user_name'] = email2nickname(email2contact_email(device.user))
             result['platform'] = device.platform
 
             result['is_desktop_client'] = False

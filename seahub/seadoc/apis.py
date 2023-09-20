@@ -376,7 +376,7 @@ class SeadocHistory(APIView):
         url, is_default, date_uploaded = api_avatar_url(creator_name, avatar_size)
         info['creator_avatar_url'] = url
         info['creator_email'] = creator_name
-        info['creator_name'] = email2nickname(creator_name)
+        info['creator_name'] = email2nickname(email2contact_email(creator_name))
         info['creator_contact_email'] = email2contact_email(creator_name)
         info['ctime'] = utc_datetime_to_isoformat_timestr(ent.timestamp)
         info['size'] = ent.size

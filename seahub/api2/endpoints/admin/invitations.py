@@ -62,12 +62,12 @@ class AdminInvitations(APIView):
 
         for e in inviter_email_set:
             if e not in inviter_nickname_dict:
-                inviter_nickname_dict[e] = email2nickname(e)
+                inviter_nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in inviter_contact_email_dict:
                 inviter_contact_email_dict[e] = email2contact_email(e)
         for e in accepter_email_set:
             if e not in accepter_nickname_dict:
-                accepter_nickname_dict[e] = email2nickname(e)
+                accepter_nickname_dict[e] = email2nickname(email2contact_email(e))
             if e not in accepter_contact_email_dict:
                 accepter_contact_email_dict[e] = email2contact_email(e)
 

@@ -22,7 +22,7 @@ from pysearpc import SearpcError
 from seaserv import seafile_api
 
 from seahub.base.accounts import User, ANONYMOUS_EMAIL
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.utils import gen_inner_file_get_url, gen_inner_file_upload_url, \
         is_pro_version
 from seahub.utils.file_op import ONLINE_OFFICE_LOCK_OWNER, \
@@ -237,7 +237,7 @@ class WOPIFilesView(APIView):
 
         # optional
         if request_user != ANONYMOUS_EMAIL:
-            result['UserFriendlyName'] = email2nickname(request_user)
+            result['UserFriendlyName'] = email2nickname(email2contact_email(request_user))
             result['IsAnonymousUser'] = False
         else:
             result['IsAnonymousUser'] = True

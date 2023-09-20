@@ -82,7 +82,7 @@ class RepoCommitView(APIView):
         result = {}
         result['commit_info'] = {
             'creator_email': getattr(commit, 'creator_name', ''),
-            'creator_name': email2nickname(getattr(commit, 'creator_name', '')),
+            'creator_name': email2nickname(email2contact_email(getattr(commit, 'creator_name', ''))),
             'creator_contact_email': email2contact_email(getattr(commit, 'creator_name', '')),
             'time': timestamp_to_isoformat_timestr(commit.ctime),
             'description': commit.desc,

@@ -57,7 +57,7 @@ class OrgAdminGroups(APIView):
             group['id'] = i.id
             group['group_name'] = i.group_name
             group['ctime'] = timestamp_to_isoformat_timestr(i.timestamp)
-            group['creator_name'] = email2nickname(i.creator_name)
+            group['creator_name'] = email2nickname(email2contact_email(i.creator_name))
             group['creator_email'] = i.creator_name
             group['creator_contact_email'] = email2contact_email(i.creator_name)
             groups_list.append(group)
@@ -104,7 +104,7 @@ class OrgAdminGroup(APIView):
             "group_name": group.group_name,
             "ctime": timestamp_to_isoformat_timestr(group.timestamp),
             "creator_email": group.creator_name,
-            "creator_name": email2nickname(group.creator_name),
+            "creator_name": email2nickname(email2contact_email(group.creator_name)),
             'creator_contact_email': email2contact_email(group.creator_name),
         }
 
@@ -196,7 +196,7 @@ class OrgAdminSearchGroup(APIView):
             group['id'] = i.id
             group['group_name'] = i.group_name
             group['ctime'] = timestamp_to_isoformat_timestr(i.timestamp)
-            group['creator_name'] = email2nickname(i.creator_name)
+            group['creator_name'] = email2nickname(email2contact_email(i.creator_name))
             group['creator_email'] = i.creator_name
             group['creator_contact_email'] = email2contact_email(i.creator_name)
             groups_list.append(group)

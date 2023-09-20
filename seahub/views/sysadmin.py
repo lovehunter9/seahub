@@ -148,7 +148,7 @@ def populate_user_info(user):
     """Populate contact email and name to user.
     """
     user.contact_email = email2contact_email(user.email)
-    user.name = email2nickname(user.email)
+    user.name = email2nickname(email2contact_email(user.email))
 
 def _populate_user_quota_usage(user):
     """Populate space/share quota to user.

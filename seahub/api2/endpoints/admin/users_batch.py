@@ -95,7 +95,7 @@ class AdminAdminUsersBatch(APIView):
             profile = Profile.objects.get_profile_by_user(user.email)
             user_info = {}
             user_info['email'] = user.email
-            user_info['name'] = email2nickname(user.email)
+            user_info['name'] = email2nickname(email2contact_email(user.email))
             user_info['contact_email'] = email2contact_email(user.email)
             user_info['login_id'] = profile.login_id if profile and profile.login_id else ''
 
@@ -390,14 +390,14 @@ class AdminImportUsers(APIView):
                                              subject=_('You are invited to join %s') % get_site_name(),
                                              dj_template='sysadmin/user_batch_add_email.html',
                                              context={
-                                                 'user': email2nickname(request.user.username),
+                                                 'user': email2nickname(email2contact_email(request.user.username)),
                                                  'email': email,
                                                  'password': password
                                              })
 
             info = dict()
             info['email'] = user.email
-            info['name'] = email2nickname(user.email)
+            info['name'] = email2nickname(email2contact_email(user.email))
             info['contact_email'] = email2contact_email(user.email)
 
             info['is_staff'] = user.is_staff

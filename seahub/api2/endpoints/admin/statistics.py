@@ -272,7 +272,7 @@ class SystemUserTrafficView(APIView):
         for traffic in traffics:
             info = {}
             info['email'] = traffic['user']
-            info['name'] = email2nickname(traffic['user'])
+            info['name'] = email2nickname(email2contact_email(traffic['user']))
             info['sync_file_upload'] = traffic['sync_file_upload']
             info['sync_file_download'] = traffic['sync_file_download']
             info['web_file_upload'] = traffic['web_file_upload']
@@ -449,7 +449,7 @@ class SystemUserStorageExcelView(APIView):
         for user in all_users:
 
             user_email = user.email
-            user_name = email2nickname(user_email)
+            user_name = email2nickname(email2contact_email(user_email))
             user_contact_email = email2contact_email(user_email)
 
             _populate_user_quota_usage(user)

@@ -16,7 +16,7 @@ from .models import Profile, DetailedProfile
 from seahub.auth.decorators import login_required
 from seahub.utils import is_org_context, is_pro_version, is_valid_username
 from seahub.base.accounts import User, UNUSABLE_PASSWORD
-from seahub.base.templatetags.seahub_tags import email2nickname
+from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
 from seahub.contacts.models import Contact
 from seahub.options.models import UserOptions, CryptoOptionNotSetError, DEFAULT_COLLABORATE_EMAIL_INTERVAL
 from seahub.utils import is_ldap_user, get_webdav_url
@@ -169,7 +169,7 @@ def user_profile(request, username):
         user = None
 
     if user is not None:
-        nickname = email2nickname(user.username)
+        nickname = email2nickname(email2contact_email(user.username))
         contact_email = Profile.objects.get_contact_email_by_user(user.username)
         d_profile = DetailedProfile.objects.get_detailed_profile_by_user(
             user.username)
