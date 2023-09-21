@@ -18,7 +18,7 @@ RUN apt-get -y update && \
     apt-get install -y --no-install-recommends nodejs && \
     apt-get install -y --no-install-recommends python3-pip python3-dev && \
     apt-get install -y --no-install-recommends libsasl2-dev slapd tox lcov valgrind && \
-    apt-get install -y --no-install-recommends libpg-dev && \
+    apt-get install -y --no-install-recommends libpq-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/dev/source-code
