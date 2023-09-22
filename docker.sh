@@ -2,7 +2,7 @@
 #
 #
 #
-sleep 20
+#sleep 20
 
 # 设置数据库连接参数
 #DB_HOST="localhost"
