@@ -163,6 +163,10 @@ class ReposView(APIView):
                 if e not in nickname_dict:
                     nickname_dict[e] = email2nickname(email2contact_email(e))
 
+            for item in shared_repos:
+                item.id = item.id.strip()
+                item.repo_id = item.id.strip()
+
             shared_repo_ids = [item.repo_id for item in shared_repos]
             try:
                 monitored_repos = UserMonitoredRepos.objects.filter(repo_id__in=shared_repo_ids)
@@ -221,6 +225,10 @@ class ReposView(APIView):
             else:
                 group_repos = seafile_api.get_group_repos_by_user(email)
 
+            for item in group_repos:
+                item.id = item.id.strip()
+                item.repo_id = item.id.strip()
+
             group_repos.sort(key=lambda x: x.last_modify, reverse=True)
 
             # Reduce memcache fetch ops.
@@ -264,6 +272,10 @@ class ReposView(APIView):
 
         if filter_by['public'] and request.user.permissions.can_view_org():
             public_repos = list_inner_pub_repos(request)
+
+            for item in public_repos:
+                item.id = item.id.strip()
+                item.repo_id = item.id.strip()
 
             # get repo id owner dict
             all_repo_owner = []

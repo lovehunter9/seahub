@@ -2,7 +2,6 @@
 #
 #
 #
-#sleep 120
 
 # 设置数据库连接参数
 #DB_HOST="localhost"
