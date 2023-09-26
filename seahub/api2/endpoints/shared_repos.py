@@ -64,7 +64,7 @@ class SharedRepos(APIView):
                     continue
 
             result = {}
-            result['repo_id'] = repo.repo_id
+            result['repo_id'] = repo.repo_id.strip()
             result['repo_name'] = repo.repo_name
             result['encrypted'] = repo.encrypted
             result['share_type'] = repo.share_type

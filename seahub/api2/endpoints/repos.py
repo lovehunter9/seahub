@@ -98,6 +98,10 @@ class ReposView(APIView):
                 if e not in nickname_dict:
                     nickname_dict[e] = email2nickname(email2contact_email(e))
 
+            for item in owned_repos:
+                item.id = item.id.strip()
+                item.repo_id = item.id.strip()
+
             owned_repo_ids = [item.repo_id for item in owned_repos]
             try:
                 monitored_repos = UserMonitoredRepos.objects.filter(repo_id__in=owned_repo_ids)
