@@ -120,6 +120,8 @@ def get_sub_repo_abbrev_origin_path(repo_name, origin_path):
         return repo_name + origin_path
 
 def get_repo_owner(request, repo_id):
+    print(repo_id, " " in repo_id)
+    repo_id = repo_id.strip()
     if is_org_context(request):
         repo_owner = seafile_api.get_org_repo_owner(repo_id)
     else:
