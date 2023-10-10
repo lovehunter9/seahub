@@ -120,7 +120,9 @@ def check_folder_permission(request, repo_id, path):
         return PERMISSION_READ
 
     username = request.user.username
-    return seafile_api.check_permission_by_path(repo_id, path, username)
+    result = seafile_api.check_permission_by_path(repo_id, path, username)
+    print(result, "!!")
+    return result
 
 def get_seadoc_file_uuid(repo, path):
     repo_id = repo.repo_id
