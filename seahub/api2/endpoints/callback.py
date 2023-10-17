@@ -35,6 +35,7 @@ def list_all_users():
         data[info['contact_email']] = info
 
     # result = {'data': data, 'total_count': total_count}
+    logger.info(str(data))
     return data
 
 
@@ -54,9 +55,10 @@ class CallbackCreate(APIView):
 
             # 创建新用户
             logger.info(f"Try to create user for {new_user_email}")
-            self.create_user(new_user_email)
-            logger.info(f"Try to create default library for {new_user_email}")
-            repo_id = create_default_library(request, new_user_username)
+            user_manager = self.create_user(new_user_email)
+            virtual_id = user_manager.email
+            logger.info(f"Try to create default library for {new_user_email} with virtual_id {virtual_id}")
+            repo_id = create_default_library(request, virtual_id)
             if repo_id:
                 logger.info(f"Create defualt library {repo_id} for {new_user_email} successfully!")
             else:
@@ -67,11 +69,12 @@ class CallbackCreate(APIView):
 
     def create_user(self, email):
         # 创建新用户的逻辑
+        user_manager = None
         all_users = list_all_users()
         existed_user = all_users.get(email)
         if existed_user and existed_user.get("email"):
             logger.info(f"Contact Email {email} with Virtual Email {existed_user['email']} already exist. Ignore this procedure!")
-            return
+            return None
 
         try:
             user = User.objects.get(email=email)
@@ -83,11 +86,11 @@ class CallbackCreate(APIView):
             logger.info(f"Email {email} already exist. Ignore this procedure!")
         else:
             try:
-                User.objects.create_user(email=email, password="abcd123456", is_staff=True, is_active=True)
+                user_manager = User.objects.create_user(email=email, password="abcd123456", is_staff=True, is_active=True)
             except Exception as e:
                 logger.info(e)
                 logger.info(f"Create Email {email} has found it already exist. Ignore this procedure! Beware this causes a virtual user remained.")
-        return
+        return user_manager
 
 
 class CallbackDelete(APIView):
@@ -110,13 +113,23 @@ class CallbackDelete(APIView):
 
     def delete_user(self, email):
         # 删除用户的逻辑
+        all_users = list_all_users()
+        existed_user = all_users.get(email)
+        if existed_user and existed_user.get("email"):
+            logger.info(
+                f"Contact Email {email} with Virtual Email {existed_user['email']} exists. Will do this procedure!")
+        else:
+            logger.info(
+                f"Contact Email {email} with Virtual Email {existed_user['email']} not existed. Ignore this procedure!")
+            return
+
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist as e:
             logger.info(e)
             user = None
         if not user:
-            logger.info(f"Email {email} not existed. Ignore this procedure!")
+            logger.info(f"Email {email} found not existed when executing. Fatal Error!")
         else:
             logger.info(f"Try to delete {email}!")
             user.delete()
