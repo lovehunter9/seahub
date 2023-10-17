@@ -56,13 +56,14 @@ class CallbackCreate(APIView):
             # 创建新用户
             logger.info(f"Try to create user for {new_user_email}")
             user_manager = self.create_user(new_user_email)
-            virtual_id = user_manager.email
-            logger.info(f"Try to create default library for {new_user_email} with virtual_id {virtual_id}")
-            repo_id = create_default_library(request, virtual_id)
-            if repo_id:
-                logger.info(f"Create defualt library {repo_id} for {new_user_email} successfully!")
-            else:
-                logger.info(f"Create defualt library for {new_user_email} failed!")
+            if user_manager:
+                virtual_id = user_manager.email
+                logger.info(f"Try to create default library for {new_user_email} with virtual_id {virtual_id}")
+                repo_id = create_default_library(request, virtual_id)
+                if repo_id:
+                    logger.info(f"Create defualt library {repo_id} for {new_user_email} successfully!")
+                else:
+                    logger.info(f"Create defualt library for {new_user_email} failed!")
 
         # 返回成功响应
         return Response(status=200)
