@@ -85,6 +85,6 @@ class AddressBookGroupsSearchMember(APIView):
             email_result.append(email)
 
         # format the email results
-        result = format_searched_user_result(request, email_result, avatar_size)
+        result = format_searched_user_result(request, email_result, avatar_size, q)
 
         return Response(result)

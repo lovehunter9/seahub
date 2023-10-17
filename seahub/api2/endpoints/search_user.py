@@ -168,15 +168,19 @@ class SearchUser(APIView):
             size = 32
 
         formated_result = format_searched_user_result(
-                request, email_result[:10], size)
+                request, email_result[:10], size, q)
 
         return Response({"users": formated_result})
 
 
-def format_searched_user_result(request, users, size):
+def format_searched_user_result(request, users, size, q=None):
     results = []
 
     for email in users:
+        if q is not None:
+            name = email2nickname(email2contact_email(email))
+            if q not in name:
+                continue
         url, is_default, date_uploaded = api_avatar_url(email, size)
         results.append({
             "email": email,
