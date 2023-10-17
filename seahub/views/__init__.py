@@ -674,12 +674,15 @@ def create_default_library(request, new_username=""):
         username = request.user.username
     else:
         username = new_username
-    print("Create Default Library: username=", username)
+    import sys
+    sys.stdout.write(f"Create Default Library: username={username}")
+    sys.stdout.flush()
 
     # Disable user guide no matter user permission error or creation error,
     # so that the guide popup only show once.
     UserOptions.objects.disable_user_guide(username)
-    print("Create Default Library: disable_user_guide")
+    sys.stdout.write("Create Default Library: disable_user_guide")
+    sys.stdout.flush()
 
     if not new_username and not request.user.permissions.can_add_repo():
         return
@@ -691,13 +694,16 @@ def create_default_library(request, new_username=""):
                                                    username=username,
                                                    org_id=org_id)
     else:
-        print("Create Default Library: before create")
+        sys.stdout.write("Create Default Library: before create")
+        sys.stdout.flush()
         default_repo = seafile_api.create_repo(name=_("My Library"),
                                                desc=_("My Library"),
                                                username=username)
-        print("Create Default Library: create repo success, repo_id=", default_repo)
+        sys.stdout.write(f"Create Default Library: create repo success, repo_id={default_repo}")
+        sys.stdout.flush()
     sys_repo_id = get_system_default_repo_id()
-    print("Create Default Library: create repo success, sys_repo_id=", sys_repo_id)
+    sys.stdout.write(f"Create Default Library: create repo success, sys_repo_id={sys_repo_id}")
+    sys.stdout.flush()
     if sys_repo_id is None:
         return
 
@@ -714,7 +720,8 @@ def create_default_library(request, new_username=""):
         logger.error(e)
         return
 
-    print("Create Default Library: set_default_repo")
+    sys.stdout.write("Create Default Library: set_default_repo")
+    sys.stdout.flush()
     UserOptions.objects.set_default_repo(username, default_repo)
     return default_repo
 
