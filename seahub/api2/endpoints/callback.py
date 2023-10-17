@@ -123,15 +123,16 @@ class CallbackDelete(APIView):
                 f"Contact Email {email} with Virtual Email {existed_user['email']} not existed. Ignore this procedure!")
             return
 
+        virtual_id = existed_user.get("email", "")
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=virtual_id)
         except User.DoesNotExist as e:
             logger.info(e)
             user = None
         if not user:
-            logger.info(f"Email {email} found not existed when executing. Fatal Error!")
+            logger.info(f"Email {email} with virtual_id {virtual_id} found not existed when executing. Fatal Error!")
         else:
-            logger.info(f"Try to delete {email}!")
+            logger.info(f"Try to delete {email} with virtual_id {virtual_id}!")
             user.delete()
-            logger.info(f"Delete {email} successfully!")
+            logger.info(f"Delete {email} with virtual_id {virtual_id} successfully!")
         return
