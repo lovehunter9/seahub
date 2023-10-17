@@ -53,8 +53,14 @@ class CallbackCreate(APIView):
             new_user_email = new_user_username + "@seafile.com"
 
             # 创建新用户
+            logger.info(f"Try to create user for {new_user_email}")
             self.create_user(new_user_email)
-            create_default_library(request, new_user_username)
+            logger.info(f"Try to create default library for {new_user_email}")
+            repo_id = create_default_library(request, new_user_username)
+            if repo_id:
+                logger.info(f"Create defualt library {repo_id} for {new_user_email} successfully!")
+            else:
+                logger.info(f"Create defualt library for {new_user_email} failed!")
 
         # 返回成功响应
         return Response(status=200)
@@ -112,5 +118,7 @@ class CallbackDelete(APIView):
         if not user:
             logger.info(f"Email {email} not existed. Ignore this procedure!")
         else:
+            logger.info(f"Try to delete {email}!")
             user.delete()
+            logger.info(f"Delete {email} successfully!")
         return
