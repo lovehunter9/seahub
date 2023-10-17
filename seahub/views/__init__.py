@@ -664,22 +664,25 @@ def get_diff(repo_id, arg1, arg2):
 
     return lists
 
-def create_default_library(request):
+def create_default_library(request, new_username=""):
     """Create a default library for user.
 
     Arguments:
     - `username`:
     """
-    username = request.user.username
+    if not new_username:
+        username = request.user.username
+    else:
+        username = new_username
 
     # Disable user guide no matter user permission error or creation error,
     # so that the guide popup only show once.
     UserOptions.objects.disable_user_guide(username)
 
-    if not request.user.permissions.can_add_repo():
+    if not new_username and not request.user.permissions.can_add_repo():
         return
 
-    if is_org_context(request):
+    if not new_username and is_org_context(request):
         org_id = request.user.org.org_id
         default_repo = seafile_api.create_org_repo(name=_("My Library"),
                                                    desc=_("My Library"),

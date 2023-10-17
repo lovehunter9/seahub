@@ -7,6 +7,7 @@ from seahub.base.accounts import User
 from seahub.profile.models import Profile
 from seaserv import seafile_api, ccnet_api
 from seahub.base.templatetags.seahub_tags import email2nickname, email2contact_email
+from seahub.views import create_default_library
 
 
 logger = logging.getLogger(__name__)
@@ -53,6 +54,7 @@ class CallbackCreate(APIView):
 
             # 创建新用户
             self.create_user(new_user_email)
+            create_default_library(request, new_user_username)
 
         # 返回成功响应
         return Response(status=200)
