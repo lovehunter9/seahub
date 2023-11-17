@@ -24,7 +24,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.urls import reverse
 from django.db.models import F
-from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 from urllib.parse import quote
 from django.utils.translation import get_language, gettext as _
@@ -547,7 +547,7 @@ def view_lib_file(request, repo_id, path):
             editor_dict['access_token_ttl'] = int(time.time()) + THIRDPARTY_EDITOR_ACCESS_TOKEN_EXPIRATION
 
             return render(request, 'view_file_thirdparty_editor.html', editor_dict) \
-                if request.GET.get('dict', '0') == '0' else editor_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(editor_dict)
 
     org_id = request.user.org.org_id if is_org_context(request) else -1
     # basic file info
@@ -668,7 +668,8 @@ def view_lib_file(request, repo_id, path):
         return_dict['seadoc_access_token'] = gen_seadoc_access_token(file_uuid, filename, username, permission=seadoc_perm)
 
         send_file_access_msg(request, repo, path, 'web')
-        return render(request, template, return_dict)
+        return render(request, template, return_dict) \
+            if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     if filetype == TEXT or fileext in get_conf_text_ext():
 
@@ -678,7 +679,8 @@ def view_lib_file(request, repo_id, path):
                 filesizeformat(FILE_PREVIEW_MAX_SIZE)
 
             return_dict['err'] = error_msg
-            return render(request, template, return_dict)
+            return render(request, template, return_dict) \
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         file_enc = request.GET.get('file_enc', 'auto')
         if file_enc not in FILE_ENCODING_LIST:
@@ -687,7 +689,8 @@ def view_lib_file(request, repo_id, path):
         error_msg, file_content, encoding = get_file_content(filetype, inner_path, file_enc)
         if error_msg:
             return_dict['err'] = error_msg
-            return render(request, template, return_dict)
+            return render(request, template, return_dict) \
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         file_encoding_list = FILE_ENCODING_LIST
         if encoding and encoding not in FILE_ENCODING_LIST:
@@ -708,7 +711,7 @@ def view_lib_file(request, repo_id, path):
 
         send_file_access_msg(request, repo, path, 'web')
         return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     if filetype == MARKDOWN:
 
@@ -744,7 +747,7 @@ def view_lib_file(request, repo_id, path):
         return_dict['can_edit_file'] = can_edit_file
 
         return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     elif filetype in (VIDEO, AUDIO, PDF, SVG):
         return_dict['raw_path'] = raw_path
@@ -752,7 +755,7 @@ def view_lib_file(request, repo_id, path):
         if filetype == VIDEO:
             return_dict['enable_video_thumbnail'] = settings.ENABLE_VIDEO_THUMBNAIL
         return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     elif filetype == XMIND:
         xmind_image_path = get_thumbnail_image_path(file_id, XMIND_IMAGE_SIZE)
@@ -763,7 +766,7 @@ def view_lib_file(request, repo_id, path):
             return_dict['xmind_image_src'] = quote(get_thumbnail_src(repo_id, XMIND_IMAGE_SIZE, path))
 
         return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     elif filetype == IMAGE:
 
@@ -773,7 +776,7 @@ def view_lib_file(request, repo_id, path):
 
             return_dict['err'] = error_msg
             return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         img_prev = None
         img_next = None
@@ -800,14 +803,14 @@ def view_lib_file(request, repo_id, path):
 
         send_file_access_msg(request, repo, path, 'web')
         return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
     elif filetype in (DOCUMENT, SPREADSHEET):
 
         if repo.encrypted:
             return_dict['err'] = _('The library is encrypted, can not open file online.')
             return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         if ENABLE_OFFICE_WEB_APP:
             action_name = None
@@ -829,7 +832,7 @@ def view_lib_file(request, repo_id, path):
             if wopi_dict:
                 send_file_access_msg(request, repo, path, 'web')
                 return render(request, 'view_file_wopi.html', wopi_dict) \
-                    if request.GET.get('dict', '0') == '0' else wopi_dict
+                    if request.GET.get('dict', '0') == '0' else JsonResponse(wopi_dict)
             else:
                 return_dict['err'] = _('Error when prepare Office Online file preview page.')
 
@@ -862,7 +865,7 @@ def view_lib_file(request, repo_id, path):
                 send_file_access_msg(request, repo, path, 'web')
 
                 return render(request, 'view_file_onlyoffice.html', onlyoffice_dict) \
-                    if request.GET.get('dict', '0') == '0' else onlyoffice_dict
+                    if request.GET.get('dict', '0') == '0' else JsonResponse(onlyoffice_dict)
             else:
                 return_dict['err'] = _('Error when prepare OnlyOffice file preview page.')
 
@@ -893,24 +896,24 @@ def view_lib_file(request, repo_id, path):
         if not HAS_OFFICE_CONVERTER:
             return_dict['err'] = "File preview unsupported"
             return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         if file_size > OFFICE_PREVIEW_MAX_SIZE:
             error_msg = _('File size surpasses %s, can not be opened online.') % \
                     filesizeformat(OFFICE_PREVIEW_MAX_SIZE)
             return_dict['err'] = error_msg
             return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         error_msg = prepare_converted_html(raw_path, file_id, fileext, return_dict)
         if error_msg:
             return_dict['err'] = error_msg
             return render(request, template, return_dict) \
-                if request.GET.get('dict', '0') == '0' else return_dict
+                if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
         send_file_access_msg(request, repo, path, 'web')
         return render(request, template, return_dict) \
-            if request.GET.get('dict', '0') == '0' else return_dict
+            if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
     elif getattr(settings, 'ENABLE_CAD', False) and path.endswith('.dwg'):
 
         from seahub.cad.utils import get_cad_dict
@@ -919,11 +922,11 @@ def view_lib_file(request, repo_id, path):
         return_dict.update(cad_dict)
 
         return render(request, 'view_file_cad.html', return_dict) \
-            if request.GET.get('dict', '0') == '0' else return_dict
+            if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
     else:
         return_dict['err'] = "File preview unsupported"
         return render(request, template, return_dict) \
-            if request.GET.get('dict', '0') == '0' else return_dict
+            if request.GET.get('dict', '0') == '0' else JsonResponse(return_dict)
 
 def view_history_file_common(request, repo_id, ret_dict):
 
