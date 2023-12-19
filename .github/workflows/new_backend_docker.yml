@@ -10,13 +10,13 @@
 name: Publish Seahub Backend Docker image
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
-      - test_ci
-  release:
-    types: [published]
+#  workflow_dispatch:
+#  push:
+#    branches:
+#      - master
+#      - test_ci
+#  release:
+#    types: [published]
 
 jobs:
   push_to_registry:
